@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0f17">
+<title>Optimization Study Guide</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0b0f17; --s1:#111827; --s2:#172033; --s3:#1e2a42; --bd:#273450;
+  --tx:#e7ebf3; --mu:#9aa6bd; --dim:#6b7790;
+  --ac:#7aa2ff; --ac2:#a8c1ff; --gr:#3ddc97; --am:#ffb547; --rd:#ff6b6b; --pu:#c49bff; --cy:#4dd4e6;
+  --amb:rgba(255,181,71,.10); --grb:rgba(61,220,151,.09); --rdb:rgba(255,107,107,.10); --acb:rgba(122,162,255,.10); --pub:rgba(196,155,255,.10);
+  --r:12px; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;overflow-x:hidden}
+a{color:var(--ac2)}
+header.top{padding:18px 16px 10px;max-width:980px;margin:0 auto}
+header.top h1{font-size:1.35rem;margin:0 0 2px;letter-spacing:.2px}
+header.top p{margin:0;color:var(--mu);font-size:.9rem}
+nav.tabs{position:sticky;top:0;z-index:20;background:rgba(11,15,23,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
+nav.tabs .in{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;max-width:980px;margin:0 auto;scrollbar-width:none}
+nav.tabs .in::-webkit-scrollbar{display:none}
+nav.tabs button{flex:0 0 auto;border:1px solid var(--bd);background:var(--s1);color:var(--mu);padding:8px 13px;border-radius:999px;font:600 .88rem system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{background:var(--ac);color:#0b0f17;border-color:var(--ac)}
+nav.tabs button.fx[aria-selected="false"]{color:var(--am);border-color:rgba(255,181,71,.4)}
+main{max-width:980px;margin:0 auto;padding:12px 16px 80px}
+section.tab{display:none}
+section.tab.on{display:block;animation:fi .2s ease}
+@keyframes fi{from{opacity:.4}to{opacity:1}}
+h2{font-size:1.3rem;margin:22px 0 8px;color:#fff}
+h3{font-size:1.1rem;margin:22px 0 8px;color:var(--ac2)}
+h4{font-size:1rem;margin:16px 0 6px;color:#fff}
+p{margin:8px 0}
+.mu{color:var(--mu)} .sm{font-size:.88rem}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:14px 15px;margin:12px 0}
+.card>h3:first-child,.card>h4:first-child,.card>h2:first-child{margin-top:0}
+.imp{border-left:4px solid var(--am);background:linear-gradient(90deg,var(--amb),transparent 70%),var(--s1)}
+.tip{border-left:4px solid var(--gr);background:linear-gradient(90deg,var(--grb),transparent 70%),var(--s1)}
+.warn{border-left:4px solid var(--rd);background:linear-gradient(90deg,var(--rdb),transparent 70%),var(--s1)}
+.info{border-left:4px solid var(--ac);background:linear-gradient(90deg,var(--acb),transparent 70%),var(--s1)}
+.badge{display:inline-block;font:700 .7rem/1 system-ui,sans-serif;padding:4px 7px;border-radius:6px;margin:0 4px 4px 0;vertical-align:middle;letter-spacing:.2px}
+.b-ese{background:#ff6b6b;color:#1a0b0b} .b-cat{background:#7aa2ff;color:#0b1020} .b-notes{background:#c49bff;color:#140b20}
+.b-book{background:#4dd4e6;color:#04161a} .b-hot{background:#ffb547;color:#1d1204} .b-rep{background:#3ddc97;color:#04170e}
+.star{color:var(--am)}
+mark{background:rgba(255,181,71,.22);color:#ffe2b0;padding:0 3px;border-radius:4px}
+b,strong{color:#fff}
+.eq{font-family:var(--mono);background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:9px 11px;margin:8px 0;overflow-x:auto;white-space:nowrap;font-size:.92rem;line-height:1.75}
+.eq.wrap{white-space:normal}
+.box{border:1.5px solid var(--gr);background:var(--grb);border-radius:8px;padding:8px 11px;margin:8px 0;font-weight:600}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:10px 0}
+ol.steps>li{counter-increment:st;position:relative;padding:8px 10px 8px 44px;margin:6px 0;background:var(--s2);border-radius:9px;border:1px solid var(--bd)}
+ol.steps>li::before{content:counter(st);position:absolute;left:9px;top:8px;width:26px;height:26px;border-radius:50%;background:var(--ac);color:#0b0f17;font:700 .85rem/26px system-ui,sans-serif;text-align:center}
+ol.steps.mini>li{padding:5px 8px 5px 36px;font-size:.88rem;background:transparent;border-style:dashed}
+ol.steps.mini>li::before{width:20px;height:20px;line-height:20px;font-size:.72rem;top:6px;background:var(--s3);color:var(--ac2)}
+ul{padding-left:20px} li{margin:3px 0}
+details{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);margin:12px 0;overflow:hidden}
+details>summary{cursor:pointer;padding:12px 15px;font-weight:700;list-style:none;display:flex;gap:8px;align-items:flex-start}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸";color:var(--ac);transition:transform .15s;flex:0 0 auto}
+details[open]>summary::before{transform:rotate(90deg)}
+details>.db{padding:2px 15px 14px;border-top:1px solid var(--bd)}
+details.sol>summary{color:var(--gr)}
+.tw{overflow-x:auto;margin:10px 0;-webkit-overflow-scrolling:touch;border-radius:8px;border:1px solid var(--bd)}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{border:1px solid var(--bd);padding:6px 8px;text-align:center;white-space:nowrap}
+th{background:var(--s3);color:var(--ac2);font-weight:700}
+td{background:var(--s1)}
+table.tab caption{caption-side:top;text-align:left;padding:6px 8px;color:var(--mu);font-size:.8rem;background:var(--s2)}
+table.tab tr td.pv,table.tab tr.prow td.pv{background:var(--am);color:#1d1204;font-weight:800}
+table.tab td.pcol{background:rgba(255,181,71,.10)}
+table.tab tr.prow td{background:rgba(122,162,255,.10)}
+table.tab tr.zrow td{background:var(--s2);color:var(--gr);font-weight:700}
+table.lt td,table.lt th{text-align:left;white-space:normal}
+.fr{display:inline-flex;align-items:baseline;font-size:.95em}
+.fr sup{font-size:.78em} .fr sub{font-size:.78em}
+figure.gr{margin:12px 0;background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:8px}
+figure.gr svg{width:100%;max-width:440px;display:block;margin:0 auto;height:auto}
+figure.gr figcaption{font-size:.84rem;color:var(--mu);text-align:center;padding:4px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:center;margin-bottom:4px}
+.lg{font-size:.78rem;padding-left:16px;position:relative}
+.lg::before{content:"";position:absolute;left:0;top:50%;width:12px;height:3px;border-radius:2px}
+.l1b::before{background:#7aa2ff}.l2b::before{background:#ff8fa3}.l3b::before{background:#3ddc97}.l4b::before{background:#c49bff}
+svg .gd{stroke:#1f2a40;stroke-width:1}
+svg .ax{stroke:#9aa6bd;stroke-width:1.4}
+svg .tk{fill:#8592aa;font:10px system-ui,sans-serif}
+svg .fe{fill:rgba(255,181,71,.20);stroke:rgba(255,181,71,.55);stroke-width:1}
+svg .l1{stroke:#7aa2ff;stroke-width:2}svg .l2{stroke:#ff8fa3;stroke-width:2}svg .l3{stroke:#3ddc97;stroke-width:2}svg .l4{stroke:#c49bff;stroke-width:2}
+svg .vv{fill:#e7ebf3} svg .vo{fill:#ffb547;stroke:#fff;stroke-width:1.5}
+svg .vt{fill:#e7ebf3;font:600 10.5px system-ui,sans-serif} svg .vot{fill:#ffb547;font-weight:800}
+.grid2{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:720px){.grid2{grid-template-columns:1fr 1fr}}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem}
+.kv>:nth-child(odd){color:var(--mu)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--bd);border-radius:9px;margin:6px 0;background:var(--s2);cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:2px;accent-color:var(--gr);flex:0 0 auto}
+.chk.done span{color:var(--dim);text-decoration:line-through}
+.prog{height:8px;background:var(--s3);border-radius:99px;overflow:hidden;margin:6px 0 2px}
+.prog>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--gr));transition:width .3s}
+.qa dt{font-weight:700;color:#fff;margin-top:12px}
+.qa dd{margin:4px 0 0 0;padding:8px 11px;background:var(--s2);border-radius:8px;border:1px solid var(--bd)}
+.tree{list-style:none;padding-left:0;margin:8px 0}
+.tree ul{list-style:none;padding-left:18px;border-left:2px dashed var(--bd);margin-left:8px}
+.tree li{margin:6px 0}
+.node{display:inline-block;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:5px 9px;font-size:.88rem}
+.node.best{border-color:var(--gr);box-shadow:0 0 0 1px var(--gr) inset}
+.node.dead{opacity:.75;border-style:dashed}
+.toplink{position:fixed;right:14px;bottom:18px;z-index:30;background:var(--ac);color:#0b0f17;border:0;border-radius:50%;width:44px;height:44px;font-size:1.2rem;font-weight:800;box-shadow:0 6px 18px rgba(0,0,0,.4);cursor:pointer}
+.pill{display:inline-block;background:var(--s3);border:1px solid var(--bd);border-radius:999px;padding:2px 9px;font-size:.8rem;margin:2px 3px 2px 0;color:var(--mu)}
+hr{border:0;border-top:1px solid var(--bd);margin:18px 0}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.toc a{font-size:.82rem;text-decoration:none;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:5px 9px;color:var(--tx)}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>22MAO09 · Optimization for Engineers</h1>
+  <p>Step-by-step exam guide · built from your syllabus, ESE Nov 2025 paper &amp; key, CAT 1/2/3 (2026), class notes, whiteboard sessions and textbook photos</p>
+</header>
+<nav class="tabs" aria-label="Sections"><div class="in" role="tablist">
+  <button role="tab" data-t="home" aria-selected="true">🏠 Start</button>
+  <button role="tab" data-t="pat" aria-selected="false">📊 Patterns</button>
+  <button role="tab" data-t="u1" aria-selected="false">U1 · LPP</button>
+  <button role="tab" data-t="u2" aria-selected="false">U2 · Integer</button>
+  <button role="tab" data-t="u3" aria-selected="false">U3 · Dynamic</button>
+  <button role="tab" data-t="u4" aria-selected="false">U4 · Queueing</button>
+  <button role="tab" data-t="u5" aria-selected="false">U5 · NLPP</button>
+  <button role="tab" data-t="fx" aria-selected="false">⚡ Formulas</button>
+  <button role="tab" data-t="err" aria-selected="false" class="fx">⚠ Fixes</button>
+</div></nav>
+<main>
+
+<!-- ===================== HOME ===================== -->
+<section class="tab on" id="home">
+  <div class="card info">
+    <h3>Exam format (from your Nov 2025 paper &amp; syllabus)</h3>
+    <div class="kv">
+      <span>ESE</span><span>100 marks · 3 hours · answer all</span>
+      <span>Part A</span><span>10 × 2 = 20 marks → <b>2 short questions per unit</b> (Q1–2 Unit 1 … Q9–10 Unit 5)</span>
+      <span>Part B</span><span>5 × 16 = 80 marks → <b>Q11 = Unit 1 … Q15 = Unit 5</b>, each “(a) OR (b)”</span>
+      <span>Bloom level</span><span>K2 (understand) ≈ 30% · <b>K3 (apply / solve) ≈ 70%</b> → mostly numerical problems</span>
+      <span>CATs</span><span>50 marks · Part A 10×2 · Part B any 3 of 4 × 10</span>
+    </div>
+  </div>
+
+  <div class="card imp">
+    <h3>★ What the pattern tells you (read this first)</h3>
+    <ol>
+      <li>Every Part B question is a <b>method problem</b>: graphical / simplex / Big-M · Gomory / branch &amp; bound · DP recursion · queue model · Lagrange / Kuhn–Tucker.</li>
+      <li>Questions are <b>re-used</b>: the CAT problems and class-note problems re-appear in the ESE (e.g. <mark>Max 4x₁+14x₂ by DP</mark> was in ESE 2025, CAT 2 and your notes; <mark>2x₁+5x₂≤16, 6x₁+5x₂≤30</mark> was ESE 12b and CAT 1 Q14). The ESE 12a problem is <b>Example 1</b> of the textbook in your photos.</li>
+      <li>So: master every problem listed in the <b>Patterns</b> tab and each unit tab. Each is solved below step by step, with the full simplex tables.</li>
+      <li>The ESE answer key and the notes have a few <b>wrong answers</b>. See the <b>⚠ Fixes</b> tab so you don't copy them.</li>
+    </ol>
+  </div>
+
+  <h2>Your study plan (tick as you finish)</h2>
+  <div class="prog"><i id="pbar"></i></div><p class="sm mu" id="ptxt">0 / 0 done</p>
+  <div id="plan">
+    <label class="chk"><input type="checkbox" data-k="t1"><span><b>Day 1 · Unit 1:</b> formulation → graphical (ESE 11a-i, CAT1 Q11, Q7, Q4) → simplex (ESE 11a-ii) → Big-M (ESE 11b, CAT1 Q13) + Part A theory</span></label>
+    <label class="chk"><input type="checkbox" data-k="t2"><span><b>Day 2 · Unit 2:</b> Gomory pure (ESE 12a) → Gomory mixed (ESE 12b) → cut from an equation (CAT2 Q3) → branch &amp; bound (CAT2 Q11, notes problem) + theory</span></label>
+    <label class="chk"><input type="checkbox" data-k="t3"><span><b>Day 3 · Unit 3:</b> theory (Bellman, characteristics) → 4 classic “divide c into n parts” problems → LPP by DP (ESE 13b, notes 2x₁+5x₂)</span></label>
+    <label class="chk"><input type="checkbox" data-k="t4"><span><b>Day 4 · Unit 4:</b> Kendall, Little → M/M/1 drills → M/M/c (ESE 14a, CAT3 Q12) → M/M/1/N → M/M/c/N (ESE 14b)</span></label>
+    <label class="chk"><input type="checkbox" data-k="t5"><span><b>Day 5 · Unit 5:</b> convex/concave test → Lagrange + bordered Hessian (ESE 15a, CAT3 Q13) → Kuhn–Tucker (ESE 15b, CAT3 Q14)</span></label>
+    <label class="chk"><input type="checkbox" data-k="t6"><span><b>Day 6:</b> redo every ★ problem <i>without looking</i>; then read the ⚡ Formulas tab twice</span></label>
+    <label class="chk"><input type="checkbox" data-k="t7"><span><b>Exam morning:</b> ⚡ Formulas tab + Part A answers of each unit (10 minutes each)</span></label>
+  </div>
+
+  <h2>★ Top 12 problems to master (highest probability)</h2>
+  <div class="tw"><table class="lt">
+    <thead><tr><th>#</th><th>Problem</th><th>Seen in</th><th>Where solved</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Max 4x₁+14x₂ s.t. 2x₁+7x₂≤21, 7x₁+2x₂≤21 by <b>DP</b></td><td><span class="badge b-ese">ESE’25</span><span class="badge b-cat">CAT2</span><span class="badge b-notes">Notes</span></td><td>Unit 3 · Problem B1</td></tr>
+      <tr><td>2</td><td>Max x₁+x₂ s.t. 2x₁+5x₂≤16, 6x₁+5x₂≤30 (mixed / pure integer)</td><td><span class="badge b-ese">ESE’25</span><span class="badge b-cat">CAT1</span><span class="badge b-notes">Board</span></td><td>Unit 2 · Examples 2 &amp; 5</td></tr>
+      <tr><td>3</td><td>Max x₁+x₂ s.t. 3x₁+2x₂≤5, x₂≤2 (Gomory)</td><td><span class="badge b-ese">ESE’25</span><span class="badge b-book">Textbook Ex 1</span></td><td>Unit 2 · Example 1</td></tr>
+      <tr><td>4</td><td>Min y₁+…+yₙ s.t. y₁y₂…yₙ = b (DP)</td><td><span class="badge b-ese">ESE’25</span><span class="badge b-notes">Notes</span></td><td>Unit 3 · Problem A2</td></tr>
+      <tr><td>5</td><td>Big-M: Max 4x₁+3x₂ (≥, ≤, ≤ constraints)</td><td><span class="badge b-ese">ESE’25</span></td><td>Unit 1 · Example 5</td></tr>
+      <tr><td>6</td><td>M/M/c (typists: λ=15, μ=6, c=3) incl. P(W&gt;t)</td><td><span class="badge b-ese">ESE’25</span></td><td>Unit 4 · Example 4</td></tr>
+      <tr><td>7</td><td>M/M/c/N port problem (c=4, N=6)</td><td><span class="badge b-ese">ESE’25</span></td><td>Unit 4 · Example 6</td></tr>
+      <tr><td>8</td><td>Lagrange: min x₁²+(x₂+1)²+(x₃−1)², one equality</td><td><span class="badge b-ese">ESE’25</span></td><td>Unit 5 · Example 1</td></tr>
+      <tr><td>9</td><td>Kuhn–Tucker: Max 10x₁+4x₂−2x₁²−x₂², 2x₁+x₂≤5</td><td><span class="badge b-cat">CAT3</span><span class="badge b-notes">Notes</span></td><td>Unit 5 · Example 6</td></tr>
+      <tr><td>10</td><td>Branch &amp; bound: Max 7x₁+9x₂</td><td><span class="badge b-cat">CAT2</span></td><td>Unit 2 · Example 4</td></tr>
+      <tr><td>11</td><td>Max y₁y₂y₃ s.t. y₁+y₂+y₃=5 · Min Σpᵢ log pᵢ</td><td><span class="badge b-cat">CAT2</span><span class="badge b-notes">Notes</span></td><td>Unit 3 · A1, A4</td></tr>
+      <tr><td>12</td><td>Graphical LPP word problem (circuits / cloud servers)</td><td><span class="badge b-ese">ESE’25</span><span class="badge b-cat">CAT1</span></td><td>Unit 1 · Examples 1–2</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="card">
+    <h3>What I read to build this</h3>
+    <ul class="sm">
+      <li><b>Syllabus</b> (22MAO09.docx), all 5 units + course outcomes.</li>
+      <li><b>ESE Nov 2025</b> question paper + the 12-page scheme of valuation (22MAO09.pdf).</li>
+      <li><b>CAT 1 (Jul 2026), CAT 2 (Aug 2026), CAT 3 (Oct 2026)</b> papers (oe-re-cat.pdf).</li>
+      <li>Class notes: Unit 3 DP notebook, branch &amp; bound / DP sheets, 42-page Unit 4/5 NLPP + queueing notes, DP solutions (oe (1).pdf).</li>
+      <li>Whiteboard sessions (.iwb files): Gomory pure &amp; mixed cuts, branch &amp; bound with graphs.</li>
+      <li>Textbook photos: <i>Resource Management Techniques</i> (Gomory cutting-plane chapter, DP chapter).</li>
+      <li><b>About the textbooks:</b> the syllabus lists Anton &amp; Rorres and Deisenroth et al. (<i>Mathematics for Machine Learning</i>); neither book is in the folder. Method details (Z<sub>j</sub>−C<sub>j</sub> rule, dual simplex rule, Gomory steps) follow the textbook in your photos, which is the one your class uses; the bordered-Hessian test follows the reference books Taha and Kanti Swarup; convexity and KKT definitions match <i>MML</i> Chapter 7.</li>
+      <li>Every numerical answer in this guide was re-checked by computer.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== PATTERNS ===================== -->
+<section class="tab" id="pat">
+  <h2>Question-pattern analysis</h2>
+  <p class="mu sm">Every question from the 4 papers you gave me, grouped by unit. <span class="badge b-rep">REPEAT</span> = the same problem appears in more than one source.</p>
+
+  <h3>Unit 1 · Linear Programming</h3>
+  <div class="tw"><table class="lt">
+    <thead><tr><th>Question</th><th>Paper</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>Advantages of LPP</td><td>ESE Q1</td><td>2-mark theory</td></tr>
+      <tr><td>Slack and surplus variables (“Infer”)</td><td>ESE Q2 · CAT1 Q3 <span class="badge b-rep">REPEAT</span></td><td>2-mark theory</td></tr>
+      <tr><td>Mathematical formulation of an LPP</td><td>CAT1 Q1</td><td>2-mark theory</td></tr>
+      <tr><td>Feasible solution</td><td>CAT1 Q5</td><td>2-mark theory</td></tr>
+      <tr><td>Formulate egg/milk diet problem</td><td>CAT1 Q2</td><td>2-mark formulation</td></tr>
+      <tr><td>Convert to standard form (Min 8x+9y)</td><td>CAT1 Q6</td><td>2-mark</td></tr>
+      <tr><td>Graphical with no feasible region (Max 10x₁+12x₂)</td><td>CAT1 Q4</td><td>2-mark special case</td></tr>
+      <tr><td>Graphical min with unbounded region (Min 4x₁+6x₂)</td><td>CAT1 Q7</td><td>2-mark</td></tr>
+      <tr><td>Printed-circuit graphical word problem</td><td>ESE 11a(i) · 8 m</td><td>Graphical</td></tr>
+      <tr><td>Cloud-server cost minimisation (graphical)</td><td>CAT1 Q11 · 10 m</td><td>Graphical (min)</td></tr>
+      <tr><td>Max 3x₁+2x₂+5x₃ (3 ≤ constraints)</td><td>ESE 11a(ii) · 8 m</td><td>Simplex</td></tr>
+      <tr><td>Max x₁+x₂+3x₃</td><td>CAT1 Q12 · 10 m</td><td>Simplex</td></tr>
+      <tr><td>Max 4x₁+3x₂ with ≥ constraint</td><td>ESE 11b · 16 m</td><td>Big-M</td></tr>
+      <tr><td>Min 2x₁+3x₂ (penalty method)</td><td>CAT1 Q13 · 10 m</td><td>Big-M (min)</td></tr>
+    </tbody></table></div>
+  <div class="card tip sm"><b>Pattern:</b> 11(a) = graphical (8) + simplex (8); 11(b) = one long Big-M (16). Expect the same split. Graphical questions come as <b>word problems</b>: you must formulate first (that step carries marks).</div>
+
+  <h3>Unit 2 · Integer Programming</h3>
+  <div class="tw"><table class="lt">
+    <thead><tr><th>Question</th><th>Paper</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>Zero-one programming problem</td><td>ESE Q3</td><td>2-mark</td></tr>
+      <tr><td>Branch and bound technique (briefly)</td><td>ESE Q4</td><td>2-mark</td></tr>
+      <tr><td>Types of IPP · importance of IPP</td><td>CAT1 Q8, Q9</td><td>2-mark</td></tr>
+      <tr><td>Extend LPP into IPP using Gomory cut</td><td>CAT1 Q10</td><td>2-mark</td></tr>
+      <tr><td>Mixed IPP · Pure vs mixed</td><td>CAT2 Q1, Q2</td><td>2-mark</td></tr>
+      <tr><td>Gomory cut from x₁ + ⅔x₃ − ⅓x₄ = ⅔</td><td>CAT2 Q3</td><td>2-mark numeric</td></tr>
+      <tr><td>Max x₁+x₂; 3x₁+2x₂≤5; x₂≤2 (integers)</td><td>ESE 12a · 16 m <span class="badge b-book">Textbook Ex 1</span></td><td>Gomory pure</td></tr>
+      <tr><td>Max x₁+x₂; 2x₁+5x₂≤16; 6x₁+5x₂≤30</td><td>ESE 12b (x₁ integer) · CAT1 Q14 (both integer) · whiteboard <span class="badge b-rep">REPEAT ×3</span></td><td>Gomory mixed / IPP</td></tr>
+      <tr><td>Max 7x₁+9x₂; −x₁+3x₂≤6; 7x₁+x₂≤35</td><td>CAT2 Q11 · 10 m</td><td>Branch &amp; bound</td></tr>
+      <tr><td>Max x₁+4x₂; 2x₁+4x₂≤7; 5x₁+3x₂≤15</td><td>Class notes + whiteboard</td><td>Branch &amp; bound (graphical)</td></tr>
+    </tbody></table></div>
+
+  <h3>Unit 3 · Dynamic Programming</h3>
+  <div class="tw"><table class="lt">
+    <thead><tr><th>Question</th><th>Paper</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>Infer / define dynamic programming</td><td>ESE Q5 · CAT2 Q4 <span class="badge b-rep">REPEAT</span></td><td>2-mark</td></tr>
+      <tr><td>Characteristics of DP</td><td>ESE Q6 · CAT2 Q7 <span class="badge b-rep">REPEAT</span></td><td>2-mark</td></tr>
+      <tr><td>Bellman’s principle of optimality</td><td>CAT2 Q5</td><td>2-mark</td></tr>
+      <tr><td>Applications of DP</td><td>CAT2 Q6</td><td>2-mark</td></tr>
+      <tr><td>When does y=f(x) attain a minimum</td><td>CAT2 Q6b</td><td>2-mark</td></tr>
+      <tr><td>First-stage recursive equation of Max Σbᵢxᵢ, Σxᵢ=c</td><td>CAT2 Q9</td><td>2-mark</td></tr>
+      <tr><td>Forward vs backward computation</td><td>CAT2 Q10</td><td>2-mark</td></tr>
+      <tr><td>Min y₁+…+yₙ, y₁y₂…yₙ=b</td><td>ESE 13a · Notes <span class="badge b-rep">REPEAT</span></td><td>DP recursion</td></tr>
+      <tr><td>Max 4x₁+14x₂; 2x₁+7x₂≤21; 7x₁+2x₂≤21</td><td>ESE 13b · CAT2 Q14 · Notes <span class="badge b-rep">REPEAT ×3</span></td><td>LPP by DP</td></tr>
+      <tr><td>Min Σpᵢ log pᵢ, Σpᵢ=1</td><td>CAT2 Q12 · Notes <span class="badge b-rep">REPEAT</span></td><td>DP recursion</td></tr>
+      <tr><td>Max y₁y₂y₃, y₁+y₂+y₃=5</td><td>CAT2 Q13 · Notes <span class="badge b-rep">REPEAT</span></td><td>DP recursion</td></tr>
+      <tr><td>Min y₁²+…+yₙ², product = b · Min x₁²+x₂²+x₃², Σ≥15 · Max 2x₁+5x₂ (LPP)</td><td>Notes</td><td>Practice</td></tr>
+    </tbody></table></div>
+
+  <h3>Unit 4 · Queueing Theory</h3>
+  <div class="tw"><table class="lt">
+    <thead><tr><th>Question</th><th>Paper</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>Queue discipline</td><td>ESE Q7</td><td>2-mark</td></tr>
+      <tr><td>Kendall’s notation</td><td>ESE Q8 · CAT3 Q1 · Notes <span class="badge b-rep">REPEAT</span></td><td>2-mark</td></tr>
+      <tr><td>Ls for M/M/1 with λ=12, μ=24</td><td>CAT3 Q2</td><td>2-mark numeric</td></tr>
+      <tr><td>Little’s formulae</td><td>CAT3 Q3</td><td>2-mark</td></tr>
+      <tr><td>P₀ for 3-server model with λ/(cμ)=⅔</td><td>CAT3 Q4</td><td>2-mark numeric</td></tr>
+      <tr><td>Formula for P₀ in multi-server finite-capacity model</td><td>CAT3 Q5</td><td>2-mark</td></tr>
+      <tr><td>Three typists (λ=15, μ=6, c=3)</td><td>ESE 14a · 16 m</td><td>M/M/c</td></tr>
+      <tr><td>Port: 6 berths, 4 crews</td><td>ESE 14b · 16 m</td><td>M/M/c/N</td></tr>
+      <tr><td>Server, 1 request per 27 min, 10 min service</td><td>CAT3 Q11</td><td>M/M/1</td></tr>
+      <tr><td>Help desk, 2 technicians (λ=8, μ=5)</td><td>CAT3 Q12</td><td>M/M/2</td></tr>
+      <tr><td>Railway yard · supermarket · phone booth · drive-in bank · petrol pump · theatre</td><td>Notes</td><td>M/M/1 drills</td></tr>
+    </tbody></table></div>
+  <div class="card tip sm"><b>Pattern:</b> the ESE gave the two <b>multi-server</b> models (M/M/c and M/M/c/N) for 16 marks each; CATs drilled M/M/1 and M/M/2. Model III (M/M/1/N) has not appeared yet → <b>likely next</b>. Learn all four models.</div>
+
+  <h3>Unit 5 · Non-Linear Programming</h3>
+  <div class="tw"><table class="lt">
+    <thead><tr><th>Question</th><th>Paper</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>Kuhn–Tucker conditions</td><td>ESE Q9 · CAT3 Q9 (sufficiency) <span class="badge b-rep">REPEAT</span></td><td>2-mark</td></tr>
+      <tr><td>Lagrange function</td><td>ESE Q10</td><td>2-mark</td></tr>
+      <tr><td>Mathematical formulation of NLPP</td><td>CAT3 Q6</td><td>2-mark</td></tr>
+      <tr><td>Convex or concave: x⁴+6x²+12x · x₁x₂−x₁²−x₂²</td><td>CAT3 Q7, Q8</td><td>2-mark numeric</td></tr>
+      <tr><td>Find Q (Hessian of L) for f = x₁²−10x₁+x₂²−6x₂+x₃²−4x₃</td><td>CAT3 Q10 · Notes <span class="badge b-rep">REPEAT</span></td><td>2-mark</td></tr>
+      <tr><td>Min x₁²+(x₂+1)²+(x₃−1)², x₁+5x₂−3x₃=6</td><td>ESE 15a · 16 m</td><td>Lagrange</td></tr>
+      <tr><td>Min x₁²+x₂²+x₃², 4x₁+x₂²+2x₃=14</td><td>CAT3 Q13 · Notes <span class="badge b-rep">REPEAT</span></td><td>Lagrange (2 cases)</td></tr>
+      <tr><td>Max 10x₁−x₁²+10x₂−x₂², two ≤ constraints</td><td>ESE 15b · 16 m</td><td>Kuhn–Tucker</td></tr>
+      <tr><td>Max 10x₁+4x₂−2x₁²−x₂², 2x₁+x₂≤5</td><td>CAT3 Q14 · Notes <span class="badge b-rep">REPEAT</span></td><td>Kuhn–Tucker</td></tr>
+    </tbody></table></div>
+
+  <div class="card imp">
+    <h3>★ Predictions for the next ESE</h3>
+    <ul>
+      <li><b>Unit 1:</b> a graphical word problem + simplex (8+8), OR a Big-M (likely a <i>minimisation</i> like CAT1 Q13).</li>
+      <li><b>Unit 2:</b> Gomory pure (textbook Example 1/2 style) OR branch &amp; bound (CAT2 Q11 style). Mixed Gomory is possible again.</li>
+      <li><b>Unit 3:</b> one “divide c into n parts” recursion (product max / sum min / p log p) OR LPP by DP.</li>
+      <li><b>Unit 4:</b> one M/M/c or M/M/c/N problem with 3–4 parts; M/M/1/N is overdue.</li>
+      <li><b>Unit 5:</b> Lagrange with bordered-Hessian check OR Kuhn–Tucker with case analysis.</li>
+      <li><b>Part A:</b> Kendall notation, slack/surplus, Bellman’s principle, characteristics of DP, KT conditions, Lagrangian, zero-one IPP and B&amp;B definition are near-certain.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== UNIT 1 ===================== -->
+<section class="tab" id="u1">
+  <h2>Unit 1 · Linear Programming</h2>
+  <div class="toc"><a href="#u1-th">Part A theory</a><a href="#u1-form">Formulation</a><a href="#u1-gr">Graphical</a><a href="#u1-sx">Simplex</a><a href="#u1-bm">Big-M</a></div>
+
+  <h3 id="u1-th">A. Part A theory: ready-to-write 2-mark answers</h3>
+  <dl class="qa">
+    <dt>1. What is Operations Research (OR)?</dt>
+    <dd>OR is the scientific approach to decision making: it builds a <b>mathematical model</b> of a real system and finds the <b>best (optimal) decision</b> when resources are limited.</dd>
+    <dt>2. Applications of OR</dt>
+    <dd>Production planning and product mix · inventory control · transportation and assignment · queueing (banks, hospitals, networks) · scheduling and project management (PERT/CPM) · advertising-media selection · finance (portfolio, capital budgeting) · defence and logistics.</dd>
+    <dt>3. Mathematical formulation of an LPP <span class="badge b-cat">CAT1 Q1</span></dt>
+    <dd>Optimise (Max or Min) <b>Z = c₁x₁ + c₂x₂ + … + cₙxₙ</b><br>subject to aᵢ₁x₁ + aᵢ₂x₂ + … + aᵢₙxₙ (≤, = or ≥) bᵢ, i = 1, 2, …, m<br>and xⱼ ≥ 0, j = 1, …, n.<br>The parts are: <b>decision variables</b> xⱼ, the <b>objective function</b>, the <b>constraints</b>, and the <b>non-negativity</b> restrictions.</dd>
+    <dt>4. Advantages of LPP <span class="badge b-ese">ESE Q1</span></dt>
+    <dd>(i) Gives insight into the problem and a clear picture of the true situation. (ii) Gives a scientific, mathematical analysis of the problem. (iii) Lets the decision maker frame strategies consistent with the constraints and objectives. (iv) Helps make the best use of scarce resources. (v) Makes re-evaluation easy when conditions change. <i>(Any two are enough for 2 marks.)</i></dd>
+    <dt>5. Limitations of LPP</dt>
+    <dd>Assumes linearity · may give fractional answers · handles one objective only · parameters assumed certain (known constants) · large problems need a computer.</dd>
+    <dt>6. Slack and surplus variables <span class="badge b-ese">ESE Q2</span><span class="badge b-cat">CAT1 Q3</span></dt>
+    <dd><b>Slack</b> sᵢ ≥ 0 is <b>added</b> to a “≤” constraint to make it an equation: Σaᵢⱼxⱼ + sᵢ = bᵢ. It is the <b>unused</b> resource.<br><b>Surplus</b> sᵢ ≥ 0 is <b>subtracted</b> from a “≥” constraint: Σaᵢⱼxⱼ − sᵢ = bᵢ. It is the <b>excess</b> over the requirement.</dd>
+    <dt>7. Artificial variable</dt>
+    <dd>A non-negative variable Rᵢ added to “≥” and “=” constraints only to get a starting basic feasible solution. It has no physical meaning and is given a huge penalty (−M in Max, +M in Min) so it leaves the basis.</dd>
+    <dt>8. Feasible / basic / optimal solution <span class="badge b-cat">CAT1 Q5</span></dt>
+    <dd><b>Feasible solution:</b> any set of values satisfying all constraints and non-negativity.<br><b>Basic solution:</b> put (n − m) variables = 0 and solve the m equations for the rest.<br><b>Basic feasible solution:</b> a basic solution with all basic variables ≥ 0.<br><b>Optimal solution:</b> a feasible solution that gives the best value of Z.<br><b>Degenerate:</b> a basic variable equals 0.</dd>
+    <dt>9. Special cases</dt>
+    <dd><b>Infeasible:</b> no point satisfies all constraints (graph: no common region; simplex: an artificial variable stays positive at the optimum).<br><b>Unbounded:</b> Z can grow forever (simplex: the entering column has no positive entry).<br><b>Alternative optima:</b> at the optimum some non-basic variable has Zⱼ−Cⱼ = 0 (graph: Z-line parallel to a binding edge).</dd>
+    <dt>10. Standard form of an LPP</dt>
+    <dd>(i) All constraints are equations (add slack / subtract surplus). (ii) All right-hand sides bᵢ ≥ 0 (multiply a row by −1 if needed). (iii) All variables ≥ 0. (iv) Objective is Max (Min Z = −Max(−Z)).</dd>
+  </dl>
+
+  <h3 id="u1-form">B. Formulation: step by step</h3>
+  <ol class="steps">
+    <li><b>Identify the decision variables</b> (what you can choose) and write “Let x₁ = …, x₂ = …”.</li>
+    <li><b>Write the objective</b>: profit → Max, cost → Min. Z = Σ (unit profit or cost) × variable.</li>
+    <li><b>Write one constraint per resource or requirement</b>: “available / at most” → ≤; “at least / minimum requirement” → ≥.</li>
+    <li><b>Add non-negativity</b>: x₁, x₂ ≥ 0.</li>
+  </ol>
+  <div class="card"><h4>Example: egg &amp; milk diet <span class="badge b-cat">CAT1 Q2</span></h4>
+    <p>Let x₁ = grams of egg, x₂ = grams of milk.</p>
+    <div class="eq">Min Z = 12x₁ + 20x₂<br>subject to 6x₁ + 8x₂ ≥ 100 (vitamin A)<br>7x₁ + 12x₂ ≥ 120 (vitamin B)<br>x₁, x₂ ≥ 0</div>
+  </div>
+  <div class="card"><h4>Example: standard form <span class="badge b-cat">CAT1 Q6</span></h4>
+    <p>Min Z = 8x + 9y, 2x + 3y ≤ 10, 5x + 6y ≥ 12, x, y ≥ 0.</p>
+    <div class="eq">Max Z* = −8x − 9y + 0s₁ + 0s₂<br>2x + 3y + s₁ = 10 (s₁ slack)<br>5x + 6y − s₂ = 12 (s₂ surplus)<br>x, y, s₁, s₂ ≥ 0 · (Min Z = −Max Z*)</div>
+  </div>
+
+  <h3 id="u1-gr">C. Graphical method: step by step</h3>
+  <ol class="steps">
+    <li>Formulate the LPP (if it is a word problem).</li>
+    <li>Treat each constraint as an <b>equation</b> and find its two intercepts: put x₁=0 → x₂ value; put x₂=0 → x₁ value. Make a small table.</li>
+    <li>Draw the axes with a suitable scale and draw every line.</li>
+    <li>Shade the side each inequality allows (≤: towards origin; ≥: away from origin; test with (0,0)). The common shaded part in the first quadrant is the <b>feasible region</b>.</li>
+    <li>Find every <b>corner point</b>: intercepts and intersections. Solve two equations at a time for intersections (elimination).</li>
+    <li>Check each intersection satisfies all other constraints.</li>
+    <li>Evaluate Z at every corner point in a table.</li>
+    <li>Pick the largest (Max) or smallest (Min). Write the answer in words.</li>
+  </ol>
+  <div class="card tip sm"><b>Special cases to recognise:</b> no common region → <b>infeasible</b>. Region open upward with Max → <b>unbounded</b>. Region open upward with Min → the minimum still exists at a corner. Z-line parallel to a binding edge → <b>alternative optima</b>.</div>
+
+  <details class="sol" open><summary>Example 1 · Printed circuits (graphical) <span class="badge b-ese">ESE 11a(i) · 8 m</span></summary><div class="db">
+    <p>Circuit A uses 15 transistors, 10 resistors, 15 capacitors (profit Rs 5); circuit B uses 10, 20, 20 (profit Rs 8). Stock: 180, 200, 210.</p>
+    <p><b>Step 1: Formulation.</b> Let x₁ = number of A circuits, x₂ = number of B circuits.</p>
+    <div class="eq">Max Z = 5x₁ + 8x₂<br>15x₁ + 10x₂ ≤ 180 … (L1 transistors)<br>10x₁ + 20x₂ ≤ 200 … (L2 resistors)<br>15x₁ + 20x₂ ≤ 210 … (L3 capacitors)<br>x₁, x₂ ≥ 0</div>
+    <p><b>Step 2: Intercepts.</b></p>
+    <div class="tw"><table><tr><th>Line</th><th>x₁ = 0 ⇒ x₂</th><th>x₂ = 0 ⇒ x₁</th><th>Points</th></tr>
+      <tr><td>L1: 15x₁+10x₂=180</td><td>18</td><td>12</td><td>(0,18), (12,0)</td></tr>
+      <tr><td>L2: 10x₁+20x₂=200</td><td>10</td><td>20</td><td>(0,10), (20,0)</td></tr>
+      <tr><td>L3: 15x₁+20x₂=210</td><td>10.5</td><td>14</td><td>(0,10.5), (14,0)</td></tr></table></div>
+    <p><b>Step 3: Corner points.</b></p>
+    <ul>
+      <li>B = L1 ∩ L3: (15x₁+20x₂) − (15x₁+10x₂) = 210 − 180 ⇒ 10x₂ = 30 ⇒ <b>x₂ = 3</b>, x₁ = (180−30)/15 = <b>10</b>. Check L2: 100+60 = 160 ≤ 200 ✓</li>
+      <li>C = L2 ∩ L3: (15x₁+20x₂) − (10x₁+20x₂) = 210 − 200 ⇒ 5x₁ = 10 ⇒ <b>x₁ = 2</b>, x₂ = (200−20)/20 = <b>9</b>. Check L1: 30+90 = 120 ≤ 180 ✓</li>
+      <li>A = (12, 0) from L1 (the smallest x₁-intercept). D = (0, 10) from L2 (the smallest x₂-intercept).</li>
+    </ul>
+    <figure class="gr"><svg viewBox="0 0 340 300" role="img" aria-label="graph"><line class="gd" x1="34.0" y1="266.0" x2="34.0" y2="14"/><text class="tk" x="34.0" y="280" text-anchor="middle">0</text><line class="gd" x1="63.4" y1="266.0" x2="63.4" y2="14"/><text class="tk" x="63.4" y="280" text-anchor="middle">2</text><line class="gd" x1="92.8" y1="266.0" x2="92.8" y2="14"/><text class="tk" x="92.8" y="280" text-anchor="middle">4</text><line class="gd" x1="122.2" y1="266.0" x2="122.2" y2="14"/><text class="tk" x="122.2" y="280" text-anchor="middle">6</text><line class="gd" x1="151.6" y1="266.0" x2="151.6" y2="14"/><text class="tk" x="151.6" y="280" text-anchor="middle">8</text><line class="gd" x1="181.0" y1="266.0" x2="181.0" y2="14"/><text class="tk" x="181.0" y="280" text-anchor="middle">10</text><line class="gd" x1="210.4" y1="266.0" x2="210.4" y2="14"/><text class="tk" x="210.4" y="280" text-anchor="middle">12</text><line class="gd" x1="239.8" y1="266.0" x2="239.8" y2="14"/><text class="tk" x="239.8" y="280" text-anchor="middle">14</text><line class="gd" x1="269.2" y1="266.0" x2="269.2" y2="14"/><text class="tk" x="269.2" y="280" text-anchor="middle">16</text><line class="gd" x1="298.6" y1="266.0" x2="298.6" y2="14"/><text class="tk" x="298.6" y="280" text-anchor="middle">18</text><line class="gd" x1="328.0" y1="266.0" x2="328.0" y2="14"/><text class="tk" x="328.0" y="280" text-anchor="middle">20</text><line class="gd" x1="34" y1="266.0" x2="328" y2="266.0"/><text class="tk" x="29" y="270.0" text-anchor="end">0</text><line class="gd" x1="34" y1="238.0" x2="328" y2="238.0"/><text class="tk" x="29" y="242.0" text-anchor="end">2</text><line class="gd" x1="34" y1="210.0" x2="328" y2="210.0"/><text class="tk" x="29" y="214.0" text-anchor="end">4</text><line class="gd" x1="34" y1="182.0" x2="328" y2="182.0"/><text class="tk" x="29" y="186.0" text-anchor="end">6</text><line class="gd" x1="34" y1="154.0" x2="328" y2="154.0"/><text class="tk" x="29" y="158.0" text-anchor="end">8</text><line class="gd" x1="34" y1="126.0" x2="328" y2="126.0"/><text class="tk" x="29" y="130.0" text-anchor="end">10</text><line class="gd" x1="34" y1="98.0" x2="328" y2="98.0"/><text class="tk" x="29" y="102.0" text-anchor="end">12</text><line class="gd" x1="34" y1="70.0" x2="328" y2="70.0"/><text class="tk" x="29" y="74.0" text-anchor="end">14</text><line class="gd" x1="34" y1="42.0" x2="328" y2="42.0"/><text class="tk" x="29" y="46.0" text-anchor="end">16</text><line class="gd" x1="34" y1="14.0" x2="328" y2="14.0"/><text class="tk" x="29" y="18.0" text-anchor="end">18</text><polygon class="fe" points="63.4,140.0 34.0,126.0 34.0,266.0 210.4,266.0 181.0,224.0"/><line class="l1" x1="34.0" y1="14.0" x2="210.4" y2="266.0"/><line class="l2" x1="34.0" y1="126.0" x2="328.0" y2="266.0"/><line class="l3" x1="34.0" y1="119.0" x2="239.8" y2="266.0"/><line class="ax" x1="34" y1="266" x2="330" y2="266"/><line class="ax" x1="34" y1="266" x2="34" y2="10"/><text class="tk" x="328" y="260" text-anchor="end">x₁</text><text class="tk" x="40" y="20">x₂</text><circle class="vv" cx="34.0" cy="266.0" r="3.5"/><text class="vt" x="39.0" y="261.0">O</text><circle class="vv" cx="210.4" cy="266.0" r="3.5"/><text class="vt" x="198.4" y="258.0">A(12,0)</text><circle class="vv" cx="181.0" cy="224.0" r="3.5"/><text class="vt" x="187.0" y="218.0">B(10,3)</text><circle class="vo" cx="63.4" cy="140.0" r="5"/><text class="vt vot" x="67.4" y="131.0">C(2,9)</text><circle class="vv" cx="34.0" cy="126.0" r="3.5"/><text class="vt" x="39.0" y="119.0">D(0,10)</text></svg><figcaption><div class="legend"><span class="lg l1b">15x₁+10x₂=180</span><span class="lg l2b">10x₁+20x₂=200</span><span class="lg l3b">15x₁+20x₂=210</span></div>Shaded = feasible region OABCD. ★ C(2,9) is optimal.</figcaption></figure>
+    <div class="tw"><table><tr><th>Corner</th><th>O(0,0)</th><th>A(12,0)</th><th>B(10,3)</th><th>C(2,9)</th><th>D(0,10)</th></tr>
+      <tr><td>Z = 5x₁+8x₂</td><td>0</td><td>60</td><td>74</td><td><b>82</b></td><td>80</td></tr></table></div>
+    <div class="box">Max Z = Rs 82 at x₁ = 2, x₂ = 9 → make 2 circuits of type A and 9 of type B.</div>
+  </div></details>
+
+  <details class="sol"><summary>Example 2 · Cloud servers, graphical minimisation <span class="badge b-cat">CAT1 Q11 · 10 m</span></summary><div class="db">
+    <div class="eq">Min Z = 20x + 10y<br>x + 2y ≥ 40 (L1) · 3x + y ≥ 30 (L2) · 4x + 3y ≥ 60 (L3) · x, y ≥ 0</div>
+    <div class="tw"><table><tr><th>Line</th><th>x=0 ⇒ y</th><th>y=0 ⇒ x</th></tr>
+      <tr><td>L1</td><td>20</td><td>40</td></tr><tr><td>L2</td><td>30</td><td>10</td></tr><tr><td>L3</td><td>20</td><td>15</td></tr></table></div>
+    <ul>
+      <li>All are “≥” → shade <b>away</b> from the origin. Region is unbounded, which is acceptable for Min.</li>
+      <li>L1 ∩ L2: from L2, y = 30 − 3x → x + 2(30 − 3x) = 40 → −5x = −20 → <b>x = 4, y = 18</b>. Check L3: 16 + 54 = 70 ≥ 60 ✓</li>
+      <li>L1 ∩ L3 = (0, 20): fails L2 (20 &lt; 30) ✗. L2 ∩ L3 = (6, 12): fails L1 (30 &lt; 40) ✗ → L3 is <b>redundant</b>.</li>
+      <li>Corners: A(0, 30), B(4, 18), C(40, 0).</li>
+    </ul>
+    <figure class="gr"><svg viewBox="0 0 340 300" role="img" aria-label="graph"><line class="gd" x1="34.0" y1="266.0" x2="34.0" y2="14"/><text class="tk" x="34.0" y="280" text-anchor="middle">0</text><line class="gd" x1="60.7" y1="266.0" x2="60.7" y2="14"/><text class="tk" x="60.7" y="280" text-anchor="middle">4</text><line class="gd" x1="87.5" y1="266.0" x2="87.5" y2="14"/><text class="tk" x="87.5" y="280" text-anchor="middle">8</text><line class="gd" x1="114.2" y1="266.0" x2="114.2" y2="14"/><text class="tk" x="114.2" y="280" text-anchor="middle">12</text><line class="gd" x1="140.9" y1="266.0" x2="140.9" y2="14"/><text class="tk" x="140.9" y="280" text-anchor="middle">16</text><line class="gd" x1="167.6" y1="266.0" x2="167.6" y2="14"/><text class="tk" x="167.6" y="280" text-anchor="middle">20</text><line class="gd" x1="194.4" y1="266.0" x2="194.4" y2="14"/><text class="tk" x="194.4" y="280" text-anchor="middle">24</text><line class="gd" x1="221.1" y1="266.0" x2="221.1" y2="14"/><text class="tk" x="221.1" y="280" text-anchor="middle">28</text><line class="gd" x1="247.8" y1="266.0" x2="247.8" y2="14"/><text class="tk" x="247.8" y="280" text-anchor="middle">32</text><line class="gd" x1="274.5" y1="266.0" x2="274.5" y2="14"/><text class="tk" x="274.5" y="280" text-anchor="middle">36</text><line class="gd" x1="301.3" y1="266.0" x2="301.3" y2="14"/><text class="tk" x="301.3" y="280" text-anchor="middle">40</text><line class="gd" x1="328.0" y1="266.0" x2="328.0" y2="14"/><text class="tk" x="328.0" y="280" text-anchor="middle">44</text><line class="gd" x1="34" y1="266.0" x2="328" y2="266.0"/><text class="tk" x="29" y="270.0" text-anchor="end">0</text><line class="gd" x1="34" y1="236.4" x2="328" y2="236.4"/><text class="tk" x="29" y="240.4" text-anchor="end">4</text><line class="gd" x1="34" y1="206.7" x2="328" y2="206.7"/><text class="tk" x="29" y="210.7" text-anchor="end">8</text><line class="gd" x1="34" y1="177.1" x2="328" y2="177.1"/><text class="tk" x="29" y="181.1" text-anchor="end">12</text><line class="gd" x1="34" y1="147.4" x2="328" y2="147.4"/><text class="tk" x="29" y="151.4" text-anchor="end">16</text><line class="gd" x1="34" y1="117.8" x2="328" y2="117.8"/><text class="tk" x="29" y="121.8" text-anchor="end">20</text><line class="gd" x1="34" y1="88.1" x2="328" y2="88.1"/><text class="tk" x="29" y="92.1" text-anchor="end">24</text><line class="gd" x1="34" y1="58.5" x2="328" y2="58.5"/><text class="tk" x="29" y="62.5" text-anchor="end">28</text><line class="gd" x1="34" y1="28.8" x2="328" y2="28.8"/><text class="tk" x="29" y="32.8" text-anchor="end">32</text><polygon class="fe" points="34.0,43.6 60.7,132.6 301.3,266.0 328.0,266.0 328.0,14.0 34.0,14.0"/><line class="l1" x1="34.0" y1="117.8" x2="301.3" y2="266.0"/><line class="l2" x1="34.0" y1="43.6" x2="100.8" y2="266.0"/><line class="l3" x1="34.0" y1="117.8" x2="134.2" y2="266.0"/><line class="ax" x1="34" y1="266" x2="330" y2="266"/><line class="ax" x1="34" y1="266" x2="34" y2="10"/><text class="tk" x="328" y="260" text-anchor="end">x₁</text><text class="tk" x="40" y="20">x₂</text><circle class="vv" cx="34.0" cy="43.6" r="3.5"/><text class="vt" x="40.0" y="47.6">A(0,30)</text><circle class="vo" cx="60.7" cy="132.6" r="5"/><text class="vt vot" x="67.7" y="134.6">B(4,18)</text><circle class="vv" cx="301.3" cy="266.0" r="3.5"/><text class="vt" x="263.3" y="258.0">C(40,0)</text></svg><figcaption><div class="legend"><span class="lg l1b">x+2y=40</span><span class="lg l2b">3x+y=30</span><span class="lg l3b">4x+3y=60</span></div>Region is unbounded (extends up/right) — still fine for a MIN problem. ★ B(4,18).</figcaption></figure>
+    <div class="tw"><table><tr><th>Corner</th><th>A(0,30)</th><th>B(4,18)</th><th>C(40,0)</th></tr><tr><td>Z = 20x+10y</td><td>300</td><td><b>260</b></td><td>800</td></tr></table></div>
+    <div class="box">Min Z = Rs 260 lakh with 4 Standard and 18 High-Performance servers.</div>
+  </div></details>
+
+  <details class="sol"><summary>Example 3 · Min 4x₁+6x₂ (unbounded region) <span class="badge b-cat">CAT1 Q7</span></summary><div class="db">
+    <div class="eq">Min Z = 4x₁ + 6x₂ · x₁ − x₂ ≤ 4 · x₁ + x₂ ≥ 6 · x₁, x₂ ≥ 0</div>
+    <ul><li>Lines: x₁ − x₂ = 4 → (4,0), (0,−4); x₁ + x₂ = 6 → (6,0), (0,6).</li>
+      <li>Intersection: add the equations → 2x₁ = 10 → x₁ = 5, x₂ = 1.</li>
+      <li>Corners: A(0,6), B(5,1); region open upward.</li></ul>
+    <figure class="gr"><svg viewBox="0 0 340 300" role="img" aria-label="graph"><line class="gd" x1="34.0" y1="266.0" x2="34.0" y2="14"/><text class="tk" x="34.0" y="280" text-anchor="middle">0</text><line class="gd" x1="58.5" y1="266.0" x2="58.5" y2="14"/><text class="tk" x="58.5" y="280" text-anchor="middle">1</text><line class="gd" x1="83.0" y1="266.0" x2="83.0" y2="14"/><text class="tk" x="83.0" y="280" text-anchor="middle">2</text><line class="gd" x1="107.5" y1="266.0" x2="107.5" y2="14"/><text class="tk" x="107.5" y="280" text-anchor="middle">3</text><line class="gd" x1="132.0" y1="266.0" x2="132.0" y2="14"/><text class="tk" x="132.0" y="280" text-anchor="middle">4</text><line class="gd" x1="156.5" y1="266.0" x2="156.5" y2="14"/><text class="tk" x="156.5" y="280" text-anchor="middle">5</text><line class="gd" x1="181.0" y1="266.0" x2="181.0" y2="14"/><text class="tk" x="181.0" y="280" text-anchor="middle">6</text><line class="gd" x1="205.5" y1="266.0" x2="205.5" y2="14"/><text class="tk" x="205.5" y="280" text-anchor="middle">7</text><line class="gd" x1="230.0" y1="266.0" x2="230.0" y2="14"/><text class="tk" x="230.0" y="280" text-anchor="middle">8</text><line class="gd" x1="254.5" y1="266.0" x2="254.5" y2="14"/><text class="tk" x="254.5" y="280" text-anchor="middle">9</text><line class="gd" x1="279.0" y1="266.0" x2="279.0" y2="14"/><text class="tk" x="279.0" y="280" text-anchor="middle">10</text><line class="gd" x1="303.5" y1="266.0" x2="303.5" y2="14"/><text class="tk" x="303.5" y="280" text-anchor="middle">11</text><line class="gd" x1="328.0" y1="266.0" x2="328.0" y2="14"/><text class="tk" x="328.0" y="280" text-anchor="middle">12</text><line class="gd" x1="34" y1="266.0" x2="328" y2="266.0"/><text class="tk" x="29" y="270.0" text-anchor="end">0</text><line class="gd" x1="34" y1="240.8" x2="328" y2="240.8"/><text class="tk" x="29" y="244.8" text-anchor="end">1</text><line class="gd" x1="34" y1="215.6" x2="328" y2="215.6"/><text class="tk" x="29" y="219.6" text-anchor="end">2</text><line class="gd" x1="34" y1="190.4" x2="328" y2="190.4"/><text class="tk" x="29" y="194.4" text-anchor="end">3</text><line class="gd" x1="34" y1="165.2" x2="328" y2="165.2"/><text class="tk" x="29" y="169.2" text-anchor="end">4</text><line class="gd" x1="34" y1="140.0" x2="328" y2="140.0"/><text class="tk" x="29" y="144.0" text-anchor="end">5</text><line class="gd" x1="34" y1="114.8" x2="328" y2="114.8"/><text class="tk" x="29" y="118.8" text-anchor="end">6</text><line class="gd" x1="34" y1="89.6" x2="328" y2="89.6"/><text class="tk" x="29" y="93.6" text-anchor="end">7</text><line class="gd" x1="34" y1="64.4" x2="328" y2="64.4"/><text class="tk" x="29" y="68.4" text-anchor="end">8</text><line class="gd" x1="34" y1="39.2" x2="328" y2="39.2"/><text class="tk" x="29" y="43.2" text-anchor="end">9</text><line class="gd" x1="34" y1="14.0" x2="328" y2="14.0"/><text class="tk" x="29" y="18.0" text-anchor="end">10</text><polygon class="fe" points="34.0,114.8 156.5,240.8 328.0,64.4 328.0,14.0 34.0,14.0"/><line class="l1" x1="132.0" y1="266.0" x2="328.0" y2="64.4"/><line class="l2" x1="34.0" y1="114.8" x2="181.0" y2="266.0"/><line class="ax" x1="34" y1="266" x2="330" y2="266"/><line class="ax" x1="34" y1="266" x2="34" y2="10"/><text class="tk" x="328" y="260" text-anchor="end">x₁</text><text class="tk" x="40" y="20">x₂</text><circle class="vv" cx="34.0" cy="114.8" r="3.5"/><text class="vt" x="40.0" y="111.8">A(0,6)</text><circle class="vo" cx="156.5" cy="240.8" r="5"/><text class="vt vot" x="162.5" y="252.8">B(5,1)</text></svg><figcaption><div class="legend"><span class="lg l1b">x₁−x₂=4</span><span class="lg l2b">x₁+x₂=6</span></div>Unbounded region, but the minimum exists at ★ B(5,1).</figcaption></figure>
+    <div class="box">Z(A) = 36, Z(B) = 26 → Min Z = 26 at x₁ = 5, x₂ = 1.</div>
+  </div></details>
+
+  <details class="sol"><summary>Example 4 · An infeasible LPP <span class="badge b-cat">CAT1 Q4</span></summary><div class="db">
+    <div class="eq">Max Z = 10x₁ + 12x₂ · x₁ − x₂ ≤ −5 · −x₁ + x₂ ≤ 0 · x₁, x₂ ≥ 0</div>
+    <p>First constraint ⇒ x₂ ≥ x₁ + 5. Second ⇒ x₂ ≤ x₁. Both cannot hold together (x₁+5 &gt; x₁).</p>
+    <figure class="gr"><svg viewBox="0 0 340 300" role="img" aria-label="graph"><line class="gd" x1="34.0" y1="266.0" x2="34.0" y2="14"/><text class="tk" x="34.0" y="280" text-anchor="middle">0</text><line class="gd" x1="63.4" y1="266.0" x2="63.4" y2="14"/><text class="tk" x="63.4" y="280" text-anchor="middle">1</text><line class="gd" x1="92.8" y1="266.0" x2="92.8" y2="14"/><text class="tk" x="92.8" y="280" text-anchor="middle">2</text><line class="gd" x1="122.2" y1="266.0" x2="122.2" y2="14"/><text class="tk" x="122.2" y="280" text-anchor="middle">3</text><line class="gd" x1="151.6" y1="266.0" x2="151.6" y2="14"/><text class="tk" x="151.6" y="280" text-anchor="middle">4</text><line class="gd" x1="181.0" y1="266.0" x2="181.0" y2="14"/><text class="tk" x="181.0" y="280" text-anchor="middle">5</text><line class="gd" x1="210.4" y1="266.0" x2="210.4" y2="14"/><text class="tk" x="210.4" y="280" text-anchor="middle">6</text><line class="gd" x1="239.8" y1="266.0" x2="239.8" y2="14"/><text class="tk" x="239.8" y="280" text-anchor="middle">7</text><line class="gd" x1="269.2" y1="266.0" x2="269.2" y2="14"/><text class="tk" x="269.2" y="280" text-anchor="middle">8</text><line class="gd" x1="298.6" y1="266.0" x2="298.6" y2="14"/><text class="tk" x="298.6" y="280" text-anchor="middle">9</text><line class="gd" x1="328.0" y1="266.0" x2="328.0" y2="14"/><text class="tk" x="328.0" y="280" text-anchor="middle">10</text><line class="gd" x1="34" y1="266.0" x2="328" y2="266.0"/><text class="tk" x="29" y="270.0" text-anchor="end">0</text><line class="gd" x1="34" y1="240.8" x2="328" y2="240.8"/><text class="tk" x="29" y="244.8" text-anchor="end">1</text><line class="gd" x1="34" y1="215.6" x2="328" y2="215.6"/><text class="tk" x="29" y="219.6" text-anchor="end">2</text><line class="gd" x1="34" y1="190.4" x2="328" y2="190.4"/><text class="tk" x="29" y="194.4" text-anchor="end">3</text><line class="gd" x1="34" y1="165.2" x2="328" y2="165.2"/><text class="tk" x="29" y="169.2" text-anchor="end">4</text><line class="gd" x1="34" y1="140.0" x2="328" y2="140.0"/><text class="tk" x="29" y="144.0" text-anchor="end">5</text><line class="gd" x1="34" y1="114.8" x2="328" y2="114.8"/><text class="tk" x="29" y="118.8" text-anchor="end">6</text><line class="gd" x1="34" y1="89.6" x2="328" y2="89.6"/><text class="tk" x="29" y="93.6" text-anchor="end">7</text><line class="gd" x1="34" y1="64.4" x2="328" y2="64.4"/><text class="tk" x="29" y="68.4" text-anchor="end">8</text><line class="gd" x1="34" y1="39.2" x2="328" y2="39.2"/><text class="tk" x="29" y="43.2" text-anchor="end">9</text><line class="gd" x1="34" y1="14.0" x2="328" y2="14.0"/><text class="tk" x="29" y="18.0" text-anchor="end">10</text><line class="l1" x1="34.0" y1="140.0" x2="181.0" y2="14.0"/><line class="l2" x1="34.0" y1="266.0" x2="328.0" y2="14.0"/><line class="ax" x1="34" y1="266" x2="330" y2="266"/><line class="ax" x1="34" y1="266" x2="34" y2="10"/><text class="tk" x="328" y="260" text-anchor="end">x₁</text><text class="tk" x="40" y="20">x₂</text></svg><figcaption><div class="legend"><span class="lg l1b">x₁−x₂=−5 (need x₂ ≥ x₁+5)</span><span class="lg l2b">−x₁+x₂=0 (need x₂ ≤ x₁)</span></div>The two half-planes never overlap in the first quadrant → NO feasible solution.</figcaption></figure>
+    <div class="box">No feasible region → the LPP has <b>no feasible solution</b>.</div>
+  </div></details>
+
+  <h3 id="u1-sx">D. Simplex method (all constraints ≤): step by step</h3>
+  <ol class="steps">
+    <li>Make every bᵢ ≥ 0. If the problem is Min Z, solve Max Z* = −Z.</li>
+    <li>Add a slack sᵢ to each “≤” constraint; slacks get cost 0 in Z.</li>
+    <li><b>Initial basic feasible solution:</b> decision variables = 0, sᵢ = bᵢ.</li>
+    <li>Draw the table: columns C<sub>B</sub> | Y<sub>B</sub> (basic variables) | X<sub>B</sub> (their values) | one column per variable; write Cⱼ above.</li>
+    <li>Compute <b>Zⱼ − Cⱼ = Σ(C<sub>B</sub> × column entry) − Cⱼ</b> for every column. Z = Σ C<sub>B</sub>·X<sub>B</sub>.</li>
+    <li><b>Optimality test:</b> if every Zⱼ − Cⱼ ≥ 0 → optimal, stop. Otherwise the <b>most negative</b> Zⱼ − Cⱼ gives the <b>entering variable</b> (key column).</li>
+    <li><b>Ratio test:</b> θ = X<sub>B</sub> ÷ key-column entry for <b>positive</b> entries only. The <b>minimum θ</b> gives the <b>leaving variable</b> (key row). No positive entry → unbounded.</li>
+    <li><b>Pivot:</b> key element = intersection. New key row = old key row ÷ key element. For each other row: new row = old row − (its key-column entry) × new key row. Replace C<sub>B</sub> and Y<sub>B</sub>.</li>
+    <li>Go back to step 5. At the end: basic variables = X<sub>B</sub>, all others = 0.</li>
+  </ol>
+
+  <details class="sol" open><summary>Example 5 · Max Z = 3x₁+2x₂+5x₃ <span class="badge b-ese">ESE 11a(ii) · 8 m</span></summary><div class="db">
+    <div class="eq">Max Z = 3x₁ + 2x₂ + 5x₃<br>x₁ + 4x₂ ≤ 420 · 3x₁ + 2x₃ ≤ 460 · x₁ + 2x₂ + x₃ ≤ 430 · x₁, x₂, x₃ ≥ 0</div>
+    <p><b>Standard form:</b></p>
+    <div class="eq">Max Z = 3x₁ + 2x₂ + 5x₃ + 0s₁ + 0s₂ + 0s₃<br>x₁ + 4x₂ + 0x₃ + s₁ = 420<br>3x₁ + 0x₂ + 2x₃ + s₂ = 460<br>x₁ + 2x₂ + x₃ + s₃ = 430</div>
+    <p><b>Initial BFS:</b> x₁ = x₂ = x₃ = 0, s₁ = 420, s₂ = 460, s₃ = 430.</p>
+    <div class="tw"><table class="tab"><caption>Table 1</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>3</th><th>2</th><th>5</th><th>0</th><th>0</th><th>0</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>s1</th><th>s2</th><th>s3</th><th>Ratio θ</th></tr></thead><tbody><tr><td>0</td><td>s1</td><td>420</td><td>1</td><td>4</td><td class="pcol">0</td><td>1</td><td>0</td><td>0</td><td>—</td></tr><tr class="prow"><td>0</td><td>s2</td><td>460</td><td>3</td><td>0</td><td class="pv">2</td><td>0</td><td>1</td><td>0</td><td><b>460 ÷ 2 = 230 ←</b></td></tr><tr><td>0</td><td>s3</td><td>430</td><td>1</td><td>2</td><td class="pcol">1</td><td>0</td><td>0</td><td>1</td><td>430 ÷ 1 = 430</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>0</td><td>−3</td><td>−2</td><td class="pcol">−5</td><td>0</td><td>0</td><td>0</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −5 → <b>x3</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>s2</b> leaves (key row).</li><li>Key element = <b>2</b>. New key row = old key row ÷ 2; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 2</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>3</th><th>2</th><th>5</th><th>0</th><th>0</th><th>0</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>s1</th><th>s2</th><th>s3</th><th>Ratio θ</th></tr></thead><tbody><tr><td>0</td><td>s1</td><td>420</td><td>1</td><td class="pcol">4</td><td>0</td><td>1</td><td>0</td><td>0</td><td>420 ÷ 4 = 105</td></tr><tr><td>5</td><td>x3</td><td>230</td><td><span class="fr"><sup>3</sup>&frasl;<sub>2</sub></span></td><td class="pcol">0</td><td>1</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>—</td></tr><tr class="prow"><td>0</td><td>s3</td><td>200</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>2</sub></span></td><td class="pv">2</td><td>0</td><td>0</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>2</sub></span></td><td>1</td><td><b>200 ÷ 2 = 100 ←</b></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>1150</td><td><span class="fr"><sup>9</sup>&frasl;<sub>2</sub></span></td><td class="pcol">−2</td><td>0</td><td>0</td><td><span class="fr"><sup>5</sup>&frasl;<sub>2</sub></span></td><td>0</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −2 → <b>x2</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>s3</b> leaves (key row).</li><li>Key element = <b>2</b>. New key row = old key row ÷ 2; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 3 (optimal)</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>3</th><th>2</th><th>5</th><th>0</th><th>0</th><th>0</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>s1</th><th>s2</th><th>s3</th></tr></thead><tbody><tr><td>0</td><td>s1</td><td>20</td><td>2</td><td>0</td><td>0</td><td>1</td><td>1</td><td>−2</td></tr><tr><td>5</td><td>x3</td><td>230</td><td><span class="fr"><sup>3</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>1</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td></tr><tr><td>2</td><td>x2</td><td>100</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span></td><td>1</td><td>0</td><td>0</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span></td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>1350</td><td>4</td><td>0</td><td>0</td><td>0</td><td>2</td><td>1</td></tr></tbody></table></div>
+    <div class="box">All Zⱼ − Cⱼ ≥ 0 → optimal. Max Z = 1350 at x₁ = 0, x₂ = 100, x₃ = 230.</div>
+  </div></details>
+
+  <details class="sol"><summary>Example 6 · Max Z = x₁+x₂+3x₃ <span class="badge b-cat">CAT1 Q12</span></summary><div class="db">
+    <div class="eq">Max Z = x₁ + x₂ + 3x₃ · 3x₁ + 2x₂ + x₃ ≤ 3 · 2x₁ + x₂ + 2x₃ ≤ 2 · xⱼ ≥ 0<br>Standard form: add s₁, s₂ (cost 0). Initial BFS: s₁ = 3, s₂ = 2.</div>
+    <div class="tw"><table class="tab"><caption>Table 1</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>3</th><th>0</th><th>0</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>s1</th><th>s2</th><th>Ratio θ</th></tr></thead><tbody><tr><td>0</td><td>s1</td><td>3</td><td>3</td><td>2</td><td class="pcol">1</td><td>1</td><td>0</td><td>3 ÷ 1 = 3</td></tr><tr class="prow"><td>0</td><td>s2</td><td>2</td><td>2</td><td>1</td><td class="pv">2</td><td>0</td><td>1</td><td><b>2 ÷ 2 = 1 ←</b></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>0</td><td>−1</td><td>−1</td><td class="pcol">−3</td><td>0</td><td>0</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −3 → <b>x3</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>s2</b> leaves (key row).</li><li>Key element = <b>2</b>. New key row = old key row ÷ 2; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 2 (optimal)</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>3</th><th>0</th><th>0</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>s1</th><th>s2</th></tr></thead><tbody><tr><td>0</td><td>s1</td><td>2</td><td>2</td><td><span class="fr"><sup>3</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>1</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>2</sub></span></td></tr><tr><td>3</td><td>x3</td><td>1</td><td>1</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>1</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>3</td><td>2</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>0</td><td><span class="fr"><sup>3</sup>&frasl;<sub>2</sub></span></td></tr></tbody></table></div>
+    <div class="box">Max Z = 3 at x₁ = 0, x₂ = 0, x₃ = 1.</div>
+  </div></details>
+
+  <h3 id="u1-bm">E. Big-M (penalty) method: step by step</h3>
+  <ol class="steps">
+    <li>Make all bᵢ ≥ 0. For Min Z, solve <b>Max Z* = −Z</b> (this is safest; then Min Z = −Max Z*).</li>
+    <li>Convert constraints: <b>≤</b> → + slack sᵢ. <b>≥</b> → − surplus sᵢ <b>+ artificial Rᵢ</b>. <b>=</b> → + artificial Rᵢ.</li>
+    <li>Objective: give every artificial the cost <b>−M</b> (in a Max problem). M is a very large positive number.</li>
+    <li>Initial basis = all slacks and artificials (those with a +1 column).</li>
+    <li>Compute Zⱼ − Cⱼ; they now look like (a·M + b). Compare using the <b>M coefficient first</b>; the most negative is the entering variable.</li>
+    <li>Ratio test and pivot exactly as in simplex. Once an artificial leaves, you may delete its column.</li>
+    <li>Stop when all Zⱼ − Cⱼ ≥ 0. If an artificial is still basic with a positive value → <b>no feasible solution</b>.</li>
+  </ol>
+  <details class="sol" open><summary>Example 7 · Max Z = 4x₁+3x₂ by Big-M <span class="badge b-ese">ESE 11b · 16 m</span><span class="badge b-hot">KEY HAS ERROR</span></summary><div class="db">
+    <div class="eq">Max Z = 4x₁ + 3x₂ · 2x₁ + x₂ ≥ 10 · −3x₁ + 2x₂ ≤ 6 · x₁ + x₂ ≤ 6 · x₁, x₂ ≥ 0</div>
+    <p><b>Step 1: Standard form.</b> Only the first constraint is “≥”, so only <b>one</b> artificial is needed.</p>
+    <div class="eq">Max Z = 4x₁ + 3x₂ + 0s₁ + 0s₂ + 0s₃ − MR₁<br>2x₁ + x₂ − s₁ + R₁ = 10<br>−3x₁ + 2x₂ + s₂ = 6<br>x₁ + x₂ + s₃ = 6<br>all variables ≥ 0</div>
+    <p><b>Step 2: Initial BFS:</b> x₁ = x₂ = s₁ = 0 → R₁ = 10, s₂ = 6, s₃ = 6.</p>
+    <div class="tw"><table class="tab"><caption>Table 1</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>4</th><th>3</th><th>0</th><th>0</th><th>0</th><th>−M</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>R1</th><th>Ratio θ</th></tr></thead><tbody><tr class="prow"><td>−M</td><td>R1</td><td>10</td><td class="pv">2</td><td>1</td><td>−1</td><td>0</td><td>0</td><td>1</td><td><b>10 ÷ 2 = 5 ←</b></td></tr><tr><td>0</td><td>s2</td><td>6</td><td class="pcol">−3</td><td>2</td><td>0</td><td>1</td><td>0</td><td>0</td><td>—</td></tr><tr><td>0</td><td>s3</td><td>6</td><td class="pcol">1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>6 ÷ 1 = 6</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>−10M</td><td class="pcol">−2M − 4</td><td>−M − 3</td><td>M</td><td>0</td><td>0</td><td>0</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −2M − 4 → <b>x1</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>R1</b> leaves (key row).</li><li>Key element = <b>2</b>. New key row = old key row ÷ 2; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 2</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>4</th><th>3</th><th>0</th><th>0</th><th>0</th><th>−M</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>R1</th><th>Ratio θ</th></tr></thead><tbody><tr><td>4</td><td>x1</td><td>5</td><td>1</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td class="pcol"><span class="fr">−<sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>—</td></tr><tr><td>0</td><td>s2</td><td>21</td><td>0</td><td><span class="fr"><sup>7</sup>&frasl;<sub>2</sub></span></td><td class="pcol"><span class="fr">−<sup>3</sup>&frasl;<sub>2</sub></span></td><td>1</td><td>0</td><td><span class="fr"><sup>3</sup>&frasl;<sub>2</sub></span></td><td>—</td></tr><tr class="prow"><td>0</td><td>s3</td><td>1</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td class="pv"><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>1</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>2</sub></span></td><td><b>1 ÷ <span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span> = 2 ←</b></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>20</td><td>0</td><td>−1</td><td class="pcol">−2</td><td>0</td><td>0</td><td>M + 2</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −2 → <b>s1</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>s3</b> leaves (key row).</li><li>Key element = <b><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></b>. New key row = old key row ÷ <span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span>; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 3 (optimal)</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>4</th><th>3</th><th>0</th><th>0</th><th>0</th><th>−M</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>R1</th></tr></thead><tbody><tr><td>4</td><td>x1</td><td>6</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr><tr><td>0</td><td>s2</td><td>24</td><td>0</td><td>5</td><td>0</td><td>1</td><td>3</td><td>0</td></tr><tr><td>0</td><td>s1</td><td>2</td><td>0</td><td>1</td><td>1</td><td>0</td><td>2</td><td>−1</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>24</td><td>0</td><td>1</td><td>0</td><td>0</td><td>4</td><td>M</td></tr></tbody></table></div>
+    <div class="box">All Zⱼ − Cⱼ ≥ 0 and no artificial in the basis → Max Z = 24 at x₁ = 6, x₂ = 0.</div>
+    <div class="card warn sm"><b>Do not copy the official key here.</b> It treated x₁ + x₂ ≤ 6 as “≥” (added −s₃ + R₂) and ended at x₁ = −4, x₂ = −2, Z = 22, which is impossible because x ≥ 0. Quick check of the correct answer: (6,0) satisfies 12 ≥ 10, −18 ≤ 6 and 6 ≤ 6; Z = 24. The feasible region is the triangle (5,0), (6,0), (4,2) with Z = 20, 24, 22, so 24 is the maximum.</div>
+  </div></details>
+
+  <details class="sol"><summary>Example 8 · Min Z = 2x₁+3x₂ by penalty method <span class="badge b-cat">CAT1 Q13</span></summary><div class="db">
+    <div class="eq">Min Z = 2x₁ + 3x₂ · x₁ + x₂ ≥ 5 · x₁ + 2x₂ ≥ 6 · x₁, x₂ ≥ 0</div>
+    <p><b>Convert:</b> Max Z* = −2x₁ − 3x₂ + 0s₁ + 0s₂ − MR₁ − MR₂</p>
+    <div class="eq">x₁ + x₂ − s₁ + R₁ = 5<br>x₁ + 2x₂ − s₂ + R₂ = 6<br>Initial BFS: R₁ = 5, R₂ = 6</div>
+    <div class="tw"><table class="tab"><caption>Table 1</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>−2</th><th>−3</th><th>0</th><th>0</th><th>−M</th><th>−M</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>R1</th><th>R2</th><th>Ratio θ</th></tr></thead><tbody><tr><td>−M</td><td>R1</td><td>5</td><td>1</td><td class="pcol">1</td><td>−1</td><td>0</td><td>1</td><td>0</td><td>5 ÷ 1 = 5</td></tr><tr class="prow"><td>−M</td><td>R2</td><td>6</td><td>1</td><td class="pv">2</td><td>0</td><td>−1</td><td>0</td><td>1</td><td><b>6 ÷ 2 = 3 ←</b></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>−11M</td><td>−2M + 2</td><td class="pcol">−3M + 3</td><td>M</td><td>M</td><td>0</td><td>0</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −3M + 3 → <b>x2</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>R2</b> leaves (key row).</li><li>Key element = <b>2</b>. New key row = old key row ÷ 2; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 2</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>−2</th><th>−3</th><th>0</th><th>0</th><th>−M</th><th>−M</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>R1</th><th>R2</th><th>Ratio θ</th></tr></thead><tbody><tr class="prow"><td>−M</td><td>R1</td><td>2</td><td class="pv"><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>−1</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>1</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>2</sub></span></td><td><b>2 ÷ <span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span> = 4 ←</b></td></tr><tr><td>−3</td><td>x2</td><td>3</td><td class="pcol"><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>1</td><td>0</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>3 ÷ <span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span> = 6</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>−2M − 9</td><td class="pcol">−<span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span>M + <span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>M</td><td>−<span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span>M + <span class="fr"><sup>3</sup>&frasl;<sub>2</sub></span></td><td>0</td><td><span class="fr"><sup>3</sup>&frasl;<sub>2</sub></span>M − <span class="fr"><sup>3</sup>&frasl;<sub>2</sub></span></td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −<span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span>M + <span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span> → <b>x1</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>R1</b> leaves (key row).</li><li>Key element = <b><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></b>. New key row = old key row ÷ <span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span>; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 3 (optimal)</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>−2</th><th>−3</th><th>0</th><th>0</th><th>−M</th><th>−M</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>R1</th><th>R2</th></tr></thead><tbody><tr><td>−2</td><td>x1</td><td>4</td><td>1</td><td>0</td><td>−2</td><td>1</td><td>2</td><td>−1</td></tr><tr><td>−3</td><td>x2</td><td>1</td><td>0</td><td>1</td><td>1</td><td>−1</td><td>−1</td><td>1</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>−11</td><td>0</td><td>0</td><td>1</td><td>1</td><td>M − 1</td><td>M − 1</td></tr></tbody></table></div>
+    <div class="box">Max Z* = −11 → <b>Min Z = 11</b> at x₁ = 4, x₂ = 1. (Graphical check: corners (0,5)→15, (4,1)→11, (6,0)→12.)</div>
+  </div></details>
+</section>
+
+<!-- ===================== UNIT 2 ===================== -->
+<section class="tab" id="u2">
+  <h2>Unit 2 · Integer Programming</h2>
+  <div class="toc"><a href="#u2-th">Part A theory</a><a href="#u2-gp">Gomory pure</a><a href="#u2-gm">Gomory mixed</a><a href="#u2-bb">Branch &amp; bound</a></div>
+
+  <h3 id="u2-th">A. Part A theory</h3>
+  <dl class="qa">
+    <dt>1. Integer programming problem (IPP)</dt>
+    <dd>An LPP in which <b>some or all decision variables must take integer values</b>. Example: number of machines, trucks or workers cannot be fractional.</dd>
+    <dt>2. Types of IPP <span class="badge b-cat">CAT1 Q8</span></dt>
+    <dd><b>(i) Pure (all) integer:</b> every variable must be an integer.<br><b>(ii) Mixed integer:</b> only some variables must be integers, the rest are continuous.<br><b>(iii) Zero-one (binary):</b> every variable is either 0 or 1.</dd>
+    <dt>3. Zero-one programming problem <span class="badge b-ese">ESE Q3</span></dt>
+    <dd>If all the variables in the optimum solution of an IPP are allowed to take only the values <b>0 or 1</b> (a yes/no type decision), the problem is called a zero-one programming problem. Examples: capital budgeting (accept a project or not), assignment, facility location.</dd>
+    <dt>4. Importance / need of IPP <span class="badge b-cat">CAT1 Q9</span></dt>
+    <dd>Many real decisions are indivisible (men, machines, vehicles, projects). Simply <b>rounding</b> the LP answer may give an <b>infeasible</b> or a <b>non-optimal</b> point, so special methods (cutting plane, branch &amp; bound) are needed. Used in production scheduling, capital budgeting, travelling salesman, crew scheduling, plant location.</dd>
+    <dt>5. Mixed IPP · Pure vs mixed <span class="badge b-cat">CAT2 Q1, Q2</span></dt>
+    <dd>Mixed IPP: only some variables are restricted to integers.
+      <div class="tw"><table class="lt"><tr><th>Pure IPP</th><th>Mixed IPP</th></tr>
+      <tr><td>All variables integer</td><td>Only some variables integer</td></tr>
+      <tr><td>Gomory <b>fractional (all-integer)</b> cut</td><td>Gomory <b>mixed</b> cut</td></tr>
+      <tr><td>Cut uses only fractional parts fⱼ</td><td>Cut uses aⱼ and f/(f−1)·aⱼ for continuous variables</td></tr></table></div></dd>
+    <dt>6. Gomory’s cutting plane / fractional cut</dt>
+    <dd>An extra (secondary / Gomorian) constraint added to the optimal simplex table. It <b>cuts off the current non-integer optimum</b> but <b>no feasible integer point</b>; repeated cuts lead to the integer optimum.</dd>
+    <dt>7. Branch and bound technique <span class="badge b-ese">ESE Q4</span></dt>
+    <dd>Starts with the continuous (LP) optimum, then <b>systematically partitions the solution space into two sub-problems</b> (xᵣ ≤ [xᵣ*] and xᵣ ≥ [xᵣ*]+1), eliminating the parts that contain no feasible integer solution. Nodes are <b>fathomed</b> when infeasible, integer, or not better than the best integer value found.</dd>
+  </dl>
+
+  <h3 id="u2-gp">B. Gomory’s all-integer (fractional) cutting plane: step by step</h3>
+  <ol class="steps">
+    <li>Ignore integrality. Write the standard form and solve by the <b>simplex method</b>.</li>
+    <li>If every basic variable is an integer → that is the answer. Otherwise go on.</li>
+    <li>Write every X<sub>Bi</sub> = [X<sub>Bi</sub>] + fᵢ, where [ ] is the integer part and 0 ≤ fᵢ &lt; 1. Choose the row with the <b>largest fᵢ</b> = <b>source row</b> (tie → choose any).</li>
+    <li>In the source row, write every coefficient as integer + non-negative fraction. A negative fraction becomes <b>negative integer + positive fraction</b>, e.g. −⅔ = −1 + ⅓, −¼ = −1 + ¾.</li>
+    <li><b>Gomory cut:</b> Σ f<sub>kj</sub> xⱼ ≥ f<sub>k</sub> (sum over non-basic variables), i.e. <b>−Σ f<sub>kj</sub> xⱼ + s₁ = −f<sub>k</sub></b>, s₁ = Gomorian slack.</li>
+    <li>Add this row at the bottom of the optimal table (s₁ is basic with a negative value → optimal but infeasible).</li>
+    <li><b>Dual simplex:</b> leaving variable = row with the most negative X<sub>B</sub>. Entering variable = <b>Max{(Zⱼ−Cⱼ) ÷ a<sub>rj</sub> : a<sub>rj</sub> &lt; 0}</b>. Pivot as usual.</li>
+    <li>Repeat steps 2–7 until all basic variables are integers.</li>
+  </ol>
+
+  <details class="sol" open><summary>Example 1 · Max x₁+x₂, 3x₁+2x₂≤5, x₂≤2 <span class="badge b-ese">ESE 12a · 16 m</span><span class="badge b-book">Textbook Ex 1</span></summary><div class="db">
+    <div class="eq">Max Z = x₁ + x₂ · 3x₁ + 2x₂ ≤ 5 · x₂ ≤ 2 · x₁, x₂ ≥ 0 and integers</div>
+    <p><b>Step 1: Standard form</b> (slacks x₃, x₄):</p>
+    <div class="eq">Max Z = x₁ + x₂ + 0x₃ + 0x₄<br>3x₁ + 2x₂ + x₃ = 5<br>x₂ + x₄ = 2 · Initial BFS: x₃ = 5, x₄ = 2</div>
+    <div class="tw"><table class="tab"><caption>Table 1</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>Ratio θ</th></tr></thead><tbody><tr class="prow"><td>0</td><td>x3</td><td>5</td><td class="pv">3</td><td>2</td><td>1</td><td>0</td><td><b>5 ÷ 3 = <span class="fr"><sup>5</sup>&frasl;<sub>3</sub></span> ←</b></td></tr><tr><td>0</td><td>x4</td><td>2</td><td class="pcol">0</td><td>1</td><td>0</td><td>1</td><td>—</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>0</td><td class="pcol">−1</td><td>−1</td><td>0</td><td>0</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −1 → <b>x1</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>x3</b> leaves (key row).</li><li>Key element = <b>3</b>. New key row = old key row ÷ 3; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 2</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>Ratio θ</th></tr></thead><tbody><tr><td>1</td><td>x1</td><td><span class="fr"><sup>5</sup>&frasl;<sub>3</sub></span></td><td>1</td><td class="pcol"><span class="fr"><sup>2</sup>&frasl;<sub>3</sub></span></td><td><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td>0</td><td><span class="fr"><sup>5</sup>&frasl;<sub>3</sub></span> ÷ <span class="fr"><sup>2</sup>&frasl;<sub>3</sub></span> = <span class="fr"><sup>5</sup>&frasl;<sub>2</sub></span></td></tr><tr class="prow"><td>0</td><td>x4</td><td>2</td><td>0</td><td class="pv">1</td><td>0</td><td>1</td><td><b>2 ÷ 1 = 2 ←</b></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td><span class="fr"><sup>5</sup>&frasl;<sub>3</sub></span></td><td>0</td><td class="pcol"><span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span></td><td><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td>0</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = <span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span> → <b>x2</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>x4</b> leaves (key row).</li><li>Key element = <b>1</b>. New key row = old key row ÷ 1; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 3 (optimal)</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th></tr></thead><tbody><tr><td>1</td><td>x1</td><td><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td>1</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td><span class="fr">−<sup>2</sup>&frasl;<sub>3</sub></span></td></tr><tr><td>1</td><td>x2</td><td>2</td><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td><span class="fr"><sup>7</sup>&frasl;<sub>3</sub></span></td><td>0</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td></tr></tbody></table></div>
+    <p><b>Step 2:</b> LP optimum is Z = 7/3 at x₁ = 1/3, x₂ = 2, which is <b>not integer</b>.</p>
+    <p><b>Step 3: Source row.</b> Only x₁ = 1/3 is fractional → x₁-row is the source row:</p>
+    <div class="eq">1/3 = x₁ + (1/3)x₃ − (2/3)x₄<br>⇒ 0 + 1/3 = x₁ + (0 + 1/3)x₃ + (−1 + 1/3)x₄</div>
+    <p><b>Step 4: Cut</b> (take the fractional parts of the non-basic variables x₃, x₄):</p>
+    <div class="eq">(1/3)x₃ + (1/3)x₄ ≥ 1/3 &nbsp;⇒&nbsp; −(1/3)x₃ − (1/3)x₄ + s₁ = −1/3</div>
+    <p><b>Step 5:</b> Add it to the optimal table and apply the dual simplex:</p>
+    <div class="tw"><table class="tab"><caption>Table after adding cut 1</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th><th>0</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>s1</th></tr></thead><tbody><tr><td>1</td><td>x1</td><td><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td>1</td><td>0</td><td class="pcol"><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td><span class="fr">−<sup>2</sup>&frasl;<sub>3</sub></span></td><td>0</td></tr><tr><td>1</td><td>x2</td><td>2</td><td>0</td><td>1</td><td class="pcol">0</td><td>1</td><td>0</td></tr><tr class="prow"><td>0</td><td>s1</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span></td><td>0</td><td>0</td><td class="pv"><span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span></td><td><span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span></td><td>1</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td><span class="fr"><sup>7</sup>&frasl;<sub>3</sub></span></td><td>0</td><td>0</td><td class="pcol"><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td><span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span></td><td>0</td></tr></tbody></table></div><ol class="steps mini"><li>Most negative X<sub>B</sub> is in row <b>s1</b> → s1 leaves.</li><li>Ratios (Z<sub>j</sub>−C<sub>j</sub>) ÷ (key-row entry), only where entry &lt; 0: x3: <span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span> ÷ (<span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span>) = −1, x4: <span class="fr"><sup>1</sup>&frasl;<sub>3</sub></span> ÷ (<span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span>) = −1. Take the <b>maximum</b> (closest to 0) → <b>x3</b> enters.</li><li>Key element = <b><span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span></b>; do the usual row operations.</li></ol><div class="tw"><table class="tab"><caption>Table after adding cut 2 (feasible & optimal)</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th><th>0</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>s1</th></tr></thead><tbody><tr><td>1</td><td>x1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>−1</td><td>1</td></tr><tr><td>1</td><td>x2</td><td>2</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr><tr><td>0</td><td>x3</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>−3</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr></tbody></table></div>
+    <div class="box">Optimum integer solution: Max Z = 2 at x₁ = 0, x₂ = 2. (Alternative integer optimum: x₁ = 1, x₂ = 1, also Z = 2.)</div>
+    <div class="card tip sm"><b>Geometric meaning (textbook):</b> substituting x₃ = 5 − 3x₁ − 2x₂ and x₄ = 2 − x₂ into the cut gives <b>x₁ + x₂ ≤ 2</b>. This line cuts off the corner (1/3, 2) but keeps every integer point. The paper says “x₁ &gt; 0”; if that is read strictly, the answer is x₁ = 1, x₂ = 1.</div>
+  </div></details>
+
+  <h3 id="u2-gm">C. Gomory’s mixed-integer cut: step by step</h3>
+  <ol class="steps">
+    <li>Solve the LP by simplex, ignoring integrality.</li>
+    <li>Look only at the variables that <b>must</b> be integer. Pick the one with a fractional value; its row is the <b>source row</b>: x<sub>k</sub> + Σ a<sub>kj</sub>xⱼ = [X<sub>Bk</sub>] + f<sub>k</sub>.</li>
+    <li>Split the non-basic (continuous) variables into J⁺ (a<sub>kj</sub> ≥ 0) and J⁻ (a<sub>kj</sub> &lt; 0).</li>
+    <li><b>Mixed cut:</b> <span class="eq wrap" style="display:block">Σ<sub>J⁺</sub> a<sub>kj</sub>xⱼ + [f<sub>k</sub> ÷ (f<sub>k</sub> − 1)] · Σ<sub>J⁻</sub> a<sub>kj</sub>xⱼ ≥ f<sub>k</sub></span> Write it as −(…) + s₁ = −f<sub>k</sub>.</li>
+    <li>Add it to the table and use the dual simplex (same rule as above).</li>
+    <li>Stop when every integer-restricted variable is an integer (continuous ones may stay fractional).</li>
+  </ol>
+
+  <details class="sol" open><summary>Example 2 · Max x₁+x₂, 2x₁+5x₂≤16, 6x₁+5x₂≤30, x₁ integer <span class="badge b-ese">ESE 12b · 16 m</span><span class="badge b-rep">REPEAT</span></summary><div class="db">
+    <div class="eq">Max Z = x₁ + x₂ · 2x₁ + 5x₂ ≤ 16 · 6x₁ + 5x₂ ≤ 30 · x₂ ≥ 0, x₁ a non-negative integer</div>
+    <div class="eq">Standard form: 2x₁ + 5x₂ + x₃ = 16 · 6x₁ + 5x₂ + x₄ = 30 · initial BFS x₃ = 16, x₄ = 30</div>
+    <div class="tw"><table class="tab"><caption>Table 1</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>Ratio θ</th></tr></thead><tbody><tr><td>0</td><td>x3</td><td>16</td><td class="pcol">2</td><td>5</td><td>1</td><td>0</td><td>16 ÷ 2 = 8</td></tr><tr class="prow"><td>0</td><td>x4</td><td>30</td><td class="pv">6</td><td>5</td><td>0</td><td>1</td><td><b>30 ÷ 6 = 5 ←</b></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>0</td><td class="pcol">−1</td><td>−1</td><td>0</td><td>0</td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = −1 → <b>x1</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>x4</b> leaves (key row).</li><li>Key element = <b>6</b>. New key row = old key row ÷ 6; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 2</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th><th></th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>Ratio θ</th></tr></thead><tbody><tr class="prow"><td>0</td><td>x3</td><td>6</td><td>0</td><td class="pv"><span class="fr"><sup>10</sup>&frasl;<sub>3</sub></span></td><td>1</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>3</sub></span></td><td><b>6 ÷ <span class="fr"><sup>10</sup>&frasl;<sub>3</sub></span> = <span class="fr"><sup>9</sup>&frasl;<sub>5</sub></span> ←</b></td></tr><tr><td>1</td><td>x1</td><td>5</td><td>1</td><td class="pcol"><span class="fr"><sup>5</sup>&frasl;<sub>6</sub></span></td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>6</sub></span></td><td>5 ÷ <span class="fr"><sup>5</sup>&frasl;<sub>6</sub></span> = 6</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td>5</td><td>0</td><td class="pcol"><span class="fr">−<sup>1</sup>&frasl;<sub>6</sub></span></td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>6</sub></span></td><td></td></tr></tbody></table></div><ol class="steps mini"><li>Most negative Z<sub>j</sub>−C<sub>j</sub> = <span class="fr">−<sup>1</sup>&frasl;<sub>6</sub></span> → <b>x2</b> enters (key column).</li><li>Minimum ratio X<sub>B</sub> ÷ key-column entry (positive entries only) → <b>x3</b> leaves (key row).</li><li>Key element = <b><span class="fr"><sup>10</sup>&frasl;<sub>3</sub></span></b>. New key row = old key row ÷ <span class="fr"><sup>10</sup>&frasl;<sub>3</sub></span>; every other row: new = old − (its key-column entry) × new key row.</li></ol><div class="tw"><table class="tab"><caption>Table 3 (optimal)</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th></tr></thead><tbody><tr><td>1</td><td>x2</td><td><span class="fr"><sup>9</sup>&frasl;<sub>5</sub></span></td><td>0</td><td>1</td><td><span class="fr"><sup>3</sup>&frasl;<sub>10</sub></span></td><td><span class="fr">−<sup>1</sup>&frasl;<sub>10</sub></span></td></tr><tr><td>1</td><td>x1</td><td><span class="fr"><sup>7</sup>&frasl;<sub>2</sub></span></td><td>1</td><td>0</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span></td><td><span class="fr"><sup>1</sup>&frasl;<sub>4</sub></span></td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td><span class="fr"><sup>53</sup>&frasl;<sub>10</sub></span></td><td>0</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>20</sub></span></td><td><span class="fr"><sup>3</sup>&frasl;<sub>20</sub></span></td></tr></tbody></table></div>
+    <p><b>LP optimum:</b> Z = 53/10 at x₁ = 7/2, x₂ = 9/5. Only <b>x₁</b> must be an integer, and x₁ = 7/2 = 3 + 1/2 → f = 1/2.</p>
+    <p><b>Source row (x₁):</b> x₁ − (1/4)x₃ + (1/4)x₄ = 7/2. Here J⁺ = {x₄} (coeff 1/4) and J⁻ = {x₃} (coeff −1/4).</p>
+    <div class="eq">f/(f−1) = (1/2)/(1/2 − 1) = −1<br>Cut: (1/4)x₄ + (−1)(−1/4)x₃ ≥ 1/2 ⇒ (1/4)x₃ + (1/4)x₄ ≥ 1/2<br>⇒ −(1/4)x₃ − (1/4)x₄ + s₁ = −1/2</div>
+    <div class="tw"><table class="tab"><caption>Table after adding mixed cut 1</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th><th>0</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>s1</th></tr></thead><tbody><tr><td>1</td><td>x2</td><td><span class="fr"><sup>9</sup>&frasl;<sub>5</sub></span></td><td>0</td><td>1</td><td class="pcol"><span class="fr"><sup>3</sup>&frasl;<sub>10</sub></span></td><td><span class="fr">−<sup>1</sup>&frasl;<sub>10</sub></span></td><td>0</td></tr><tr><td>1</td><td>x1</td><td><span class="fr"><sup>7</sup>&frasl;<sub>2</sub></span></td><td>1</td><td>0</td><td class="pcol"><span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span></td><td><span class="fr"><sup>1</sup>&frasl;<sub>4</sub></span></td><td>0</td></tr><tr class="prow"><td>0</td><td>s1</td><td><span class="fr">−<sup>1</sup>&frasl;<sub>2</sub></span></td><td>0</td><td>0</td><td class="pv"><span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span></td><td><span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span></td><td>1</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td><span class="fr"><sup>53</sup>&frasl;<sub>10</sub></span></td><td>0</td><td>0</td><td class="pcol"><span class="fr"><sup>1</sup>&frasl;<sub>20</sub></span></td><td><span class="fr"><sup>3</sup>&frasl;<sub>20</sub></span></td><td>0</td></tr></tbody></table></div><ol class="steps mini"><li>Most negative X<sub>B</sub> is in row <b>s1</b> → s1 leaves.</li><li>Ratios (Z<sub>j</sub>−C<sub>j</sub>) ÷ (key-row entry), only where entry &lt; 0: x3: <span class="fr"><sup>1</sup>&frasl;<sub>20</sub></span> ÷ (<span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span>) = <span class="fr">−<sup>1</sup>&frasl;<sub>5</sub></span>, x4: <span class="fr"><sup>3</sup>&frasl;<sub>20</sub></span> ÷ (<span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span>) = <span class="fr">−<sup>3</sup>&frasl;<sub>5</sub></span>. Take the <b>maximum</b> (closest to 0) → <b>x3</b> enters.</li><li>Key element = <b><span class="fr">−<sup>1</sup>&frasl;<sub>4</sub></span></b>; do the usual row operations.</li></ol><div class="tw"><table class="tab"><caption>Table after adding mixed cut 2 (feasible & optimal)</caption><thead><tr><th></th><th></th><th>C<sub>j</sub>→</th><th>1</th><th>1</th><th>0</th><th>0</th><th>0</th></tr><tr><th>C<sub>B</sub></th><th>Y<sub>B</sub></th><th>X<sub>B</sub></th><th>x1</th><th>x2</th><th>x3</th><th>x4</th><th>s1</th></tr></thead><tbody><tr><td>1</td><td>x2</td><td><span class="fr"><sup>6</sup>&frasl;<sub>5</sub></span></td><td>0</td><td>1</td><td>0</td><td><span class="fr">−<sup>2</sup>&frasl;<sub>5</sub></span></td><td><span class="fr"><sup>6</sup>&frasl;<sub>5</sub></span></td></tr><tr><td>1</td><td>x1</td><td>4</td><td>1</td><td>0</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>2</sub></span></td><td>−1</td></tr><tr><td>0</td><td>x3</td><td>2</td><td>0</td><td>0</td><td>1</td><td>1</td><td>−4</td></tr><tr class="zrow"><td colspan="2">Z<sub>j</sub>−C<sub>j</sub></td><td><span class="fr"><sup>26</sup>&frasl;<sub>5</sub></span></td><td>0</td><td>0</td><td>0</td><td><span class="fr"><sup>1</sup>&frasl;<sub>10</sub></span></td><td><span class="fr"><sup>1</sup>&frasl;<sub>5</sub></span></td></tr></tbody></table></div>
+    <div class="box">Max Z = 26/5 = 5.2 at x₁ = 4 (integer), x₂ = 6/5.</div>
+    <p class="sm mu">Check: x₁ = 3 gives x₂ ≤ min(10/5, 12/5) = 2 → Z = 5; x₁ = 4 gives x₂ ≤ min(8/5, 6/5) = 6/5 → Z = 5.2 (best); x₁ = 5 gives x₂ = 0 → Z = 5.</p>
+  </div></details>
+
+  <details class="sol"><summary>Example 3 · Gomory cut from a given equation <span class="badge b-cat">CAT2 Q3</span></summary><div class="db">
+    <p>Equation: x₁ + (2/3)x₃ − (1/3)x₄ = 2/3 (x₁ integer, x₃, x₄ continuous).</p>
+    <ul><li>f = 2/3. J⁺ = {x₃: 2/3}, J⁻ = {x₄: −1/3}. f/(f−1) = (2/3)/(−1/3) = −2.</li>
+      <li>Mixed cut: (2/3)x₃ + (−2)(−1/3)x₄ ≥ 2/3 ⇒ <b>(2/3)x₃ + (2/3)x₄ ≥ 2/3</b> ⇒ −(2/3)x₃ − (2/3)x₄ + s₁ = −2/3.</li>
+      <li>If it were a pure IPP: −1/3 = −1 + 2/3, so the fractional cut is also (2/3)x₃ + (2/3)x₄ ≥ 2/3 (same here).</li></ul>
+  </div></details>
+
+  <h3 id="u2-bb">D. Branch and bound: step by step</h3>
+  <ol class="steps">
+    <li>Solve the LP relaxation (graphically for 2 variables). If the answer is integer → stop.</li>
+    <li>Pick a fractional variable xᵣ = xᵣ* (e.g. the one with the largest fraction). Create two sub-problems: <b>SP-a: xᵣ ≤ [xᵣ*]</b> and <b>SP-b: xᵣ ≥ [xᵣ*] + 1</b>. This removes the strip [xᵣ*] &lt; xᵣ &lt; [xᵣ*]+1, which contains no integer point.</li>
+    <li>Solve each sub-problem as an LP (add the new bound line to the graph).</li>
+    <li><b>Fathom</b> (stop) a node if (a) it is infeasible, (b) its solution is all-integer (record it as a candidate), or (c) its Z is not better than the best integer Z found so far.</li>
+    <li>Branch again on the remaining nodes.</li>
+    <li>When every node is fathomed, the best candidate is the optimal integer solution. Draw the tree.</li>
+  </ol>
+
+  <details class="sol" open><summary>Example 4 · Max 7x₁+9x₂ <span class="badge b-cat">CAT2 Q11 · 10 m</span></summary><div class="db">
+    <div class="eq">Max Z = 7x₁ + 9x₂ · −x₁ + 3x₂ ≤ 6 · 7x₁ + x₂ ≤ 35 · x₁, x₂ ≥ 0 integers</div>
+    <p><b>LP relaxation:</b> corners (0,0), (5,0), (0,2) and the intersection: x₁ = 3x₂ − 6 → 7(3x₂ − 6) + x₂ = 35 → 22x₂ = 77 → x₂ = 3.5, x₁ = 4.5.</p>
+    <p>Z: 0, 35, 18, <b>63</b> → LP optimum (4.5, 3.5), Z = 63 (upper bound).</p>
+    <ul class="tree">
+      <li><span class="node">LP: x₁=4.5, x₂=3.5, Z=63 → branch on x₁</span>
+        <ul>
+          <li><span class="node">SP1: x₁ ≤ 4 → x₁=4, x₂=10/3 (from −4+3x₂=6), Z=58 → branch on x₂</span>
+            <ul>
+              <li><span class="node best">SP3: x₂ ≤ 3 → x₁=4, x₂=3, Z=55 ✓ integer (best)</span></li>
+              <li><span class="node dead">SP4: x₂ ≥ 4 → −x₁+12 ≤ 6 needs x₁ ≥ 6, but x₁ ≤ 4 → infeasible ✗</span></li>
+            </ul></li>
+          <li><span class="node dead">SP2: x₁ ≥ 5 → 7x₁+x₂ ≤ 35 forces x₁=5, x₂=0, Z=35 (integer, but 35 &lt; 55) ✗</span></li>
+        </ul></li>
+    </ul>
+    <div class="box">Optimum integer solution: Max Z = 55 at x₁ = 4, x₂ = 3.</div>
+  </div></details>
+
+  <details class="sol"><summary>Example 5 · Max x₁+4x₂ (class notes &amp; whiteboard)</summary><div class="db">
+    <div class="eq">Max Z = x₁ + 4x₂ · 2x₁ + 4x₂ ≤ 7 · 5x₁ + 3x₂ ≤ 15 · x₁, x₂ ≥ 0 integers</div>
+    <figure class="gr"><svg viewBox="0 0 340 300" role="img" aria-label="graph"><line class="gd" x1="34.0" y1="266.0" x2="34.0" y2="14"/><text class="tk" x="34.0" y="280" text-anchor="middle">0</text><line class="gd" x1="92.8" y1="266.0" x2="92.8" y2="14"/><text class="tk" x="92.8" y="280" text-anchor="middle">1</text><line class="gd" x1="151.6" y1="266.0" x2="151.6" y2="14"/><text class="tk" x="151.6" y="280" text-anchor="middle">2</text><line class="gd" x1="210.4" y1="266.0" x2="210.4" y2="14"/><text class="tk" x="210.4" y="280" text-anchor="middle">3</text><line class="gd" x1="269.2" y1="266.0" x2="269.2" y2="14"/><text class="tk" x="269.2" y="280" text-anchor="middle">4</text><line class="gd" x1="328.0" y1="266.0" x2="328.0" y2="14"/><text class="tk" x="328.0" y="280" text-anchor="middle">5</text><line class="gd" x1="34" y1="266.0" x2="328" y2="266.0"/><text class="tk" x="29" y="270.0" text-anchor="end">0</text><line class="gd" x1="34" y1="215.6" x2="328" y2="215.6"/><text class="tk" x="29" y="219.6" text-anchor="end">1</text><line class="gd" x1="34" y1="165.2" x2="328" y2="165.2"/><text class="tk" x="29" y="169.2" text-anchor="end">2</text><line class="gd" x1="34" y1="114.8" x2="328" y2="114.8"/><text class="tk" x="29" y="118.8" text-anchor="end">3</text><line class="gd" x1="34" y1="64.4" x2="328" y2="64.4"/><text class="tk" x="29" y="68.4" text-anchor="end">4</text><line class="gd" x1="34" y1="14.0" x2="328" y2="14.0"/><text class="tk" x="29" y="18.0" text-anchor="end">5</text><polygon class="fe" points="197.8,248.0 34.0,177.8 34.0,266.0 210.4,266.0"/><line class="l1" x1="34.0" y1="177.8" x2="239.8" y2="266.0"/><line class="l2" x1="34.0" y1="14.0" x2="210.4" y2="266.0"/><line class="ax" x1="34" y1="266" x2="330" y2="266"/><line class="ax" x1="34" y1="266" x2="34" y2="10"/><text class="tk" x="328" y="260" text-anchor="end">x₁</text><text class="tk" x="40" y="20">x₂</text><circle class="vv" cx="34.0" cy="177.8" r="3.5"/><text class="vt" x="40.0" y="172.8">(0,1.75)</text><circle class="vv" cx="122.2" cy="215.6" r="3.5"/><text class="vt" x="129.2" y="209.6">(1.5,1)</text><circle class="vo" cx="92.8" cy="215.6" r="5"/><text class="vt vot" x="66.8" y="231.6">(1,1)</text><circle class="vv" cx="210.4" cy="266.0" r="3.5"/><text class="vt" x="212.4" y="258.0">(3,0)</text></svg><figcaption><div class="legend"><span class="lg l1b">2x₁+4x₂=7</span><span class="lg l2b">5x₁+3x₂=15</span></div>LP optimum (0,1.75); integer optimum ★ (1,1), Z=5.</figcaption></figure>
+    <ul class="tree">
+      <li><span class="node">LP: corners (0,0) Z=0, (3,0) Z=3, (0,1.75) Z=<b>7</b>, (39/14, 5/14) Z≈4.21 → optimum (0, 1.75), Z=7. Branch on x₂.</span>
+        <ul>
+          <li><span class="node dead">SP2: x₂ ≥ 2 → 2x₁ + 8 ≤ 7 impossible → infeasible ✗</span></li>
+          <li><span class="node">SP1: x₂ ≤ 1 → corner (1.5, 1), Z = 5.5 → branch on x₁</span>
+            <ul>
+              <li><span class="node best">SP3: x₁ ≤ 1 → (1, 1), Z = 5 ✓ integer</span></li>
+              <li><span class="node dead">SP4: x₁ ≥ 2 → (2, 0.75), Z = 5 → not better than 5 (further branches give (3,0) Z=3, or infeasible) ✗</span></li>
+            </ul></li>
+        </ul></li>
+    </ul>
+    <div class="box">Max Z = 5 at x₁ = 1, x₂ = 1.</div>
+    <p class="sm mu">The board wrote Z = 6.8 at (0, 1.7). With the exact value x₂ = 7/4 it is Z = 7. The final answer is the same.</p>
+  </div></details>
+
+  <details class="sol"><summary>Example 6 · All-integer version of Example 2 <span class="badge b-cat">CAT1 Q14</span></summary><div class="db">
+    <div class="eq">Max Z = x₁ + x₂ · 2x₁ + 5x₂ ≤ 16 · 6x₁ + 5x₂ ≤ 30 · x₁, x₂ ≥ 0 integers</div>
+    <ul class="tree"><li><span class="node">LP: (3.5, 1.8), Z = 5.3 → branch on x₁</span><ul>
+      <li><span class="node best">x₁ ≤ 3 → (3, 2), Z = 5 ✓ integer</span></li>
+      <li><span class="node">x₁ ≥ 4 → (4, 1.2), Z = 5.2 → since Z must be an integer (all coefficients are integers), no branch can beat 5 → fathom. (Continuing gives (4,1) and (5,0), both Z = 5.)</span></li></ul></li></ul>
+    <div class="box">Max Z = 5. Alternative integer optima: (3,2), (4,1), (5,0).</div>
+    <p class="sm mu">With Gomory’s method this takes 3 cuts; branch &amp; bound is much faster in the exam.</p>
+  </div></details>
+</section>
+
+<!-- ===================== UNIT 3 ===================== -->
+<section class="tab" id="u3">
+  <h2>Unit 3 · Dynamic Programming</h2>
+  <div class="toc"><a href="#u3-th">Part A theory</a><a href="#u3-tm">Recursion template</a><a href="#u3-a">Classic problems A1–A5</a><a href="#u3-b">LPP by DP</a></div>
+
+  <h3 id="u3-th">A. Part A theory</h3>
+  <dl class="qa">
+    <dt>1. Dynamic programming <span class="badge b-ese">ESE Q5</span><span class="badge b-cat">CAT2 Q4</span></dt>
+    <dd>Dynamic programming is a mathematical technique of optimisation using a <b>multistage decision process</b>, in which a sequence of interrelated decisions has to be made. It decomposes the original problem in n variables into <b>n sub-problems (stages), each in one variable</b>, solved one stage after another until the final stage is reached.</dd>
+    <dt>2. Need for DP</dt>
+    <dd>(i) All the decisions of a combination must be specified. (ii) The optimal policy can be selected only after all the combinations are evaluated. DP avoids enumerating every combination.</dd>
+    <dt>3. Bellman’s principle of optimality <span class="badge b-cat">CAT2 Q5</span><span class="badge b-hot">★</span></dt>
+    <dd>“An optimal policy has the property that, <b>whatever the initial state and initial decision</b> are, the <b>remaining decisions must constitute an optimal policy</b> with regard to the state resulting from the first decision.”</dd>
+    <dt>4. Characteristics of DP <span class="badge b-ese">ESE Q6</span><span class="badge b-cat">CAT2 Q7</span><span class="badge b-hot">★</span></dt>
+    <dd>(1) The problem can be divided into <b>stages</b>, with a <b>policy decision</b> required at each stage.<br>(2) Each stage has a number of <b>states</b> associated with it.<br>(3) The effect of the policy decision at each stage is to <b>transform the current state into a state of the next stage</b>.<br>(4) Given the current state, the optimal policy for the remaining stages is <b>independent of the earlier decisions</b> (Bellman).<br>(5) The solution moves stage by stage using a <b>recursive relation</b>.</dd>
+    <dt>5. Applications of DP <span class="badge b-cat">CAT2 Q6</span></dt>
+    <dd>Production scheduling and employment smoothing · inventory levels and re-order policy · optimal combination of advertising media · shortest route / network problems · capital budgeting and allocation of resources · equipment replacement.</dd>
+    <dt>6. Forward vs backward computation <span class="badge b-cat">CAT2 Q10</span></dt>
+    <dd><b>Forward:</b> start at stage 1 and move to stage n; fₙ is built from f₁. <b>Backward:</b> start at the last stage n and move back to stage 1 (used for LPP by DP). Both give the same optimum; choose whichever makes the state definition easier.</dd>
+    <dt>7. When does y = f(x) attain a minimum? <span class="badge b-cat">CAT2</span></dt>
+    <dd>At x = a where <b>f′(a) = 0 and f″(a) &gt; 0</b> (maximum if f″(a) &lt; 0). This is the “usual classical method” used inside every DP stage below.</dd>
+    <dt>8. Key terms</dt>
+    <dd><b>Stage</b>: a point where a decision is made · <b>State</b>: information needed at a stage (e.g. amount left) · <b>Decision / policy</b>: the choice made · <b>Return</b>: contribution to the objective · <b>Recursive equation</b>: links fₙ to fₙ₋₁.</dd>
+  </dl>
+
+  <h3 id="u3-tm">B. Template for every “divide c into n parts” problem</h3>
+  <ol class="steps">
+    <li><b>Define:</b> “Let fₙ(c) be the maximum (or minimum) attainable value of … when c is divided into n parts y₁, …, yₙ. Each yᵢ is a stage.”</li>
+    <li><b>n = 1 (one-stage problem):</b> y₁ = c, so f₁(c) = (value with y₁ = c). This is trivial.</li>
+    <li><b>n = 2:</b> let y₁ = x, y₂ = c − x (or b/x for a product constraint). Write f₂(c) = opt<sub>0≤x≤c</sub>{ (term in x) ⊕ f₁(c − x) }.</li>
+    <li><b>n = 3:</b> y₁ = x and the rest (c − x) is split into 2 parts optimally → f₃(c) = opt{ (term in x) ⊕ f₂(c − x) }.</li>
+    <li><b>General recursive equation:</b> fₙ(c) = opt<sub>0≤x≤c</sub>{ (term in x) ⊕ fₙ₋₁(c − x) }.</li>
+    <li><b>Solve n = 2:</b> differentiate, set derivative = 0, find x, substitute → f₂ and the policy.</li>
+    <li><b>Solve n = 3</b> the same way using the f₂ just found.</li>
+    <li><b>Guess</b> the pattern for n = m, then prove it holds for n = m + 1 (mathematical induction).</li>
+    <li>State the <b>optimal policy</b> (y₁, …, yₙ) and the optimal value fₙ.</li>
+  </ol>
+
+  <h3 id="u3-a">C. Classic recursion problems (all from your papers / notes)</h3>
+
+  <details class="sol" open><summary>A1 · Max y₁y₂…yₙ subject to y₁+…+yₙ = c <span class="badge b-cat">CAT2 Q13 (c=5, n=3)</span><span class="badge b-notes">Notes</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>Let fₙ(c) = maximum attainable product y₁y₂…yₙ when c is divided into n parts.</li>
+      <li>n = 1: y₁ = c ⇒ <b>f₁(c) = c</b>.</li>
+      <li>n = 2: y₁ = x, y₂ = c − x ⇒ f₂(c) = max<sub>0≤x≤c</sub>{x·(c − x)} = max{x·f₁(c − x)}.</li>
+      <li>n = 3: y₁ = x, y₂ + y₃ = c − x ⇒ f₃(c) = max{x·f₂(c − x)}. In general <b>fₙ(c) = max<sub>0≤x≤c</sub>{x·fₙ₋₁(c − x)}</b>.</li>
+      <li>Solve n = 2: d/dx[x(c − x)] = c − 2x = 0 ⇒ x = c/2 (second derivative −2 &lt; 0 → max). <b>f₂(c) = (c/2)²</b>, policy (c/2, c/2).</li>
+      <li>Solve n = 3: f₃(c) = max{x·((c − x)/2)²}. d/dx = ¼[(c − x)² − 2x(c − x)] = ¼(c − x)(c − 3x) = 0 ⇒ x = c/3. <b>f₃(c) = (c/3)(2c/6)² = (c/3)³</b>.</li>
+      <li>Assume fₘ(c) = (c/m)ᵐ. Then fₘ₊₁(c) = max{x((c − x)/m)ᵐ}; derivative = 0 gives x = c/(m+1), so fₘ₊₁(c) = (c/(m+1))ᵐ⁺¹. True for m+1.</li>
+    </ol>
+    <div class="box">Optimal policy: yᵢ = c/n for all i; fₙ(c) = (c/n)ⁿ.<br>CAT2 Q13 (c = 5, n = 3): y₁ = y₂ = y₃ = 5/3, Max Z = (5/3)³ = 125/27 ≈ 4.63.</div>
+  </div></details>
+
+  <details class="sol" open><summary>A2 · Min y₁+…+yₙ subject to y₁y₂…yₙ = b <span class="badge b-ese">ESE 13a · 16 m</span><span class="badge b-notes">Notes</span></summary><div class="db">
+    <p>(“Factorise a positive quantity b into n factors so that their sum is minimum.”)</p>
+    <ol class="steps mini">
+      <li>Let fₙ(b) = minimum attainable sum y₁ + … + yₙ when b is factorised into n factors.</li>
+      <li>n = 1: y₁ = b ⇒ <b>f₁(b) = b</b> (trivial).</li>
+      <li>n = 2: y₁ = x, y₂ = b/x ⇒ f₂(b) = min<sub>0&lt;x≤b</sub>{x + b/x} = min{x + f₁(b/x)}.</li>
+      <li>n = 3: y₁ = x, y₂y₃ = b/x ⇒ f₃(b) = min{x + f₂(b/x)}. General: <b>fₙ(b) = min<sub>0&lt;x≤b</sub>{x + fₙ₋₁(b/x)}</b>.</li>
+      <li>Solve n = 2: d/dx(x + b/x) = 1 − b/x² = 0 ⇒ x = √b (second derivative 2b/x³ &gt; 0 → min). f₂(b) = √b + b/√b = <b>2b<sup>1/2</sup></b>; policy (b<sup>1/2</sup>, b<sup>1/2</sup>).</li>
+      <li>Solve n = 3: f₃(b) = min{x + 2(b/x)<sup>1/2</sup>}. d/dx = 1 − √b·x<sup>−3/2</sup> = 0 ⇒ x<sup>3/2</sup> = b<sup>1/2</sup> ⇒ x = b<sup>1/3</sup>. f₃(b) = b<sup>1/3</sup> + 2(b/b<sup>1/3</sup>)<sup>1/2</sup> = b<sup>1/3</sup> + 2b<sup>1/3</sup> = <b>3b<sup>1/3</sup></b>.</li>
+      <li>Assume fₘ(b) = m·b<sup>1/m</sup>. Then fₘ₊₁(b) = min{x + m(b/x)<sup>1/m</sup>}; derivative 1 − b<sup>1/m</sup>x<sup>−(m+1)/m</sup> = 0 ⇒ x = b<sup>1/(m+1)</sup>, giving fₘ₊₁(b) = (m+1)b<sup>1/(m+1)</sup>. True for m+1.</li>
+    </ol>
+    <div class="box">Optimal policy (b<sup>1/n</sup>, b<sup>1/n</sup>, …, b<sup>1/n</sup>); fₙ(b) = n·b<sup>1/n</sup>.</div>
+    <p class="sm mu">Your notes write “max” in this problem; it must be <b>min</b> (the question minimises the sum).</p>
+  </div></details>
+
+  <details class="sol"><summary>A3 · Min y₁²+…+yₙ² subject to y₁y₂…yₙ = b <span class="badge b-notes">Notes</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>f₁(b) = b². Recursion: fₙ(b) = min{x² + fₙ₋₁(b/x)}.</li>
+      <li>n = 2: min{x² + b²/x²}: 2x − 2b²/x³ = 0 ⇒ x⁴ = b² ⇒ x = √b; f₂(b) = b + b = 2b.</li>
+      <li>n = 3: min{x² + 2b/x}: 2x − 2b/x² = 0 ⇒ x = b<sup>1/3</sup>; f₃(b) = b<sup>2/3</sup> + 2b<sup>2/3</sup> = 3b<sup>2/3</sup>.</li>
+      <li>Induction ⇒ fₙ(b) = n·b<sup>2/n</sup>, policy yᵢ = b<sup>1/n</sup>.</li>
+    </ol>
+  </div></details>
+
+  <details class="sol" open><summary>A4 · Min Σ pᵢ log pᵢ subject to Σ pᵢ = 1 <span class="badge b-cat">CAT2 Q12</span><span class="badge b-notes">Notes</span></summary><div class="db">
+    <p>(“Divide unity into n parts so as to minimise Σpᵢ log pᵢ” / “show it is minimum when pᵢ = 1/n”.)</p>
+    <ol class="steps mini">
+      <li>Let fₙ(1) = minimum of p₁log p₁ + … + pₙlog pₙ when unity is divided into n parts.</li>
+      <li>n = 1: p₁ = 1 ⇒ f₁(1) = 1·log 1 = 0. For a general amount s: f₁(s) = s log s.</li>
+      <li>n = 2: p₁ = x, p₂ = 1 − x ⇒ f₂(1) = min<sub>0≤x≤1</sub>{x log x + (1 − x) log(1 − x)}.</li>
+      <li>General: <b>fₙ(1) = min{x log x + fₙ₋₁(1 − x)}</b>.</li>
+      <li>Solve n = 2: d/dx = (1 + log x) − (1 + log(1 − x)) = log[x/(1 − x)] = 0 ⇒ x/(1 − x) = 1 ⇒ x = ½. f₂(1) = 2(½ log ½); policy (½, ½).</li>
+      <li>Solve n = 3: f₃(1) = min{x log x + f₂(1 − x)}, where f₂(s) = s log(s/2). d/dx = 1 + log x − log((1 − x)/2) − 1 = 0 ⇒ x = (1 − x)/2 ⇒ x = ⅓. f₃(1) = 3(⅓ log ⅓).</li>
+      <li>Assume fₘ(1) = m(1/m)log(1/m); the same step gives x = 1/(m+1) and fₘ₊₁(1) = (m+1)·(1/(m+1))log(1/(m+1)).</li>
+    </ol>
+    <div class="box">Policy pᵢ = 1/n for all i; fₙ(1) = n·(1/n)log(1/n) = log(1/n) = −log n.</div>
+  </div></details>
+
+  <details class="sol"><summary>A5 · Min x₁²+x₂²+x₃² subject to x₁+x₂+x₃ ≥ 15 (state-variable form) <span class="badge b-notes">Notes</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>Stages: x₁, x₂, x₃. States: s₃ = x₁+x₂+x₃ ≥ 15; s₂ = x₁+x₂ = s₃ − x₃; s₁ = x₁ = s₂ − x₂.</li>
+      <li>f₁(s₁) = x₁² = s₁² = (s₂ − x₂)².</li>
+      <li>f₂(s₂) = min{x₂² + (s₂ − x₂)²}: 2x₂ − 2(s₂ − x₂) = 0 ⇒ x₂ = s₂/2 ⇒ f₂(s₂) = s₂²/2.</li>
+      <li>f₃(s₃) = min{x₃² + (s₃ − x₃)²/2}: 2x₃ − (s₃ − x₃) = 0 ⇒ x₃ = s₃/3 ⇒ f₃(s₃) = s₃²/9 + 4s₃²/18 = s₃²/3.</li>
+      <li>f₃ increases with s₃, so take the smallest allowed s₃ = 15. Then x₃ = 5, s₂ = 10, x₂ = 5, x₁ = 5.</li>
+    </ol>
+    <div class="box">x₁ = x₂ = x₃ = 5, Min Z = 75.</div>
+  </div></details>
+
+  <details class="sol"><summary>A6 · First-stage recursive equation for Max b₁x₁+…+bₙxₙ, Σxᵢ = c <span class="badge b-cat">CAT2 Q9</span></summary><div class="db">
+    <p>Let fₙ(c) be the maximum of Σbᵢxᵢ when c is divided among n variables.</p>
+    <div class="eq">Stage 1: f₁(c) = max<sub>x₁ = c</sub>{b₁x₁} = b₁c<br>Recursion: fₙ(c) = max<sub>0≤xₙ≤c</sub>{bₙxₙ + fₙ₋₁(c − xₙ)}</div>
+  </div></details>
+
+  <h3 id="u3-b">D. LPP by dynamic programming (backward procedure)</h3>
+  <ol class="steps">
+    <li>Number of <b>stages</b> = number of decision variables (stage j decides xⱼ). Number of <b>state variables</b> = number of constraints.</li>
+    <li>Let (B₁ⱼ, B₂ⱼ) be the resources available at stage j (states), and fⱼ(B₁ⱼ, B₂ⱼ) the optimal value from stage j onward.</li>
+    <li><b>Last stage first:</b> fₙ = max{cₙxₙ} with 0 ≤ aᵢₙxₙ ≤ Bᵢₙ for each constraint → xₙ = min over constraints of Bᵢₙ/aᵢₙ.</li>
+    <li><b>Previous stage:</b> fₙ₋₁ = max{cₙ₋₁xₙ₋₁ + fₙ(Bᵢ − aᵢ,ₙ₋₁xₙ₋₁)}, using the formula from step 3.</li>
+    <li>At stage 1 put Bᵢ₁ = the right-hand sides bᵢ.</li>
+    <li>Split the min{…} into cases (find where the two expressions are equal) and maximise each linear piece at its end-point.</li>
+    <li>Back-substitute to get every xⱼ and Max Z.</li>
+  </ol>
+
+  <details class="sol" open><summary>B1 · Max 4x₁+14x₂, 2x₁+7x₂≤21, 7x₁+2x₂≤21 <span class="badge b-ese">ESE 13b · 16 m</span><span class="badge b-cat">CAT2 Q14</span><span class="badge b-rep">REPEAT ×3</span></summary><div class="db">
+    <p><b>Step 1:</b> 2 variables and 2 constraints → 2 stages, 2 state variables. Let (B₁ⱼ, B₂ⱼ) be the states at stage j and fⱼ(B₁ⱼ, B₂ⱼ) the optimal value. Use the backward procedure.</p>
+    <p><b>Step 2: Stage 2.</b></p>
+    <div class="eq">f₂(B₁₂, B₂₂) = max{14x₂ : 0 ≤ 7x₂ ≤ B₁₂, 0 ≤ 2x₂ ≤ B₂₂}<br>= 14·max{x₂} = <b>14·min{B₁₂/7, B₂₂/2}</b><br>(the largest x₂ allowed by both limits is the smaller of the two)</div>
+    <p><b>Step 3: Stage 1.</b> After choosing x₁, what is left is B₁₂ = B₁₁ − 2x₁ and B₂₂ = B₂₁ − 7x₁:</p>
+    <div class="eq">f₁(B₁₁, B₂₁) = max<sub>0≤x₁≤B₁₁/2, 0≤x₁≤B₂₁/7</sub>{4x₁ + 14·min[(B₁₁ − 2x₁)/7, (B₂₁ − 7x₁)/2]}</div>
+    <p><b>Step 4:</b> Put B₁₁ = 21, B₂₁ = 21. The limits on x₁ are x₁ ≤ 21/2 and x₁ ≤ 3, so 0 ≤ x₁ ≤ 3.</p>
+    <div class="eq">f₁(21, 21) = max<sub>0≤x₁≤3</sub>{4x₁ + 14·min[(21 − 2x₁)/7, (21 − 7x₁)/2]}</div>
+    <p><b>Step 5: Which term is smaller?</b> (21 − 2x₁)/7 ≤ (21 − 7x₁)/2 ⇔ 42 − 4x₁ ≤ 147 − 49x₁ ⇔ 45x₁ ≤ 105 ⇔ <b>x₁ ≤ 7/3</b>.</p>
+    <div class="eq">min = (21 − 2x₁)/7 for 0 ≤ x₁ ≤ 7/3 → value 4x₁ + 2(21 − 2x₁) = <b>42</b> (constant)<br>min = (21 − 7x₁)/2 for 7/3 ≤ x₁ ≤ 3 → value 4x₁ + 7(21 − 7x₁) = <b>147 − 45x₁</b> (decreasing, = 42 at x₁ = 7/3)</div>
+    <p><b>Step 6:</b> The maximum of both pieces is 42, attained for <b>every x₁ in [0, 7/3]</b> → infinitely many optimal solutions.</p>
+    <div class="eq">Let x₁ = λ (0 ≤ λ ≤ 7/3) ⇒ x₂ = min[(21 − 2λ)/7, (21 − 7λ)/2] = (21 − 2λ)/7</div>
+    <div class="box">Max Z = 42 with x₁ = λ, x₂ = (21 − 2λ)/7, 0 ≤ λ ≤ 7/3. Examples: (0, 3) or (7/3, 7/3).</div>
+    <p class="sm mu">The answer key writes x₂ = (21 − 2λ)/2. That is a slip: the correct denominator is 7. Check (0,3): 21 ≤ 21, 6 ≤ 21, Z = 42 ✓.</p>
+  </div></details>
+
+  <details class="sol"><summary>B2 · Max 2x₁+5x₂, 2x₁+x₂≤43, 2x₂≤46 <span class="badge b-notes">Notes</span></summary><div class="db">
+    <div class="eq">Stage 2: f₂(B₁₂, B₂₂) = max{5x₂ : 0 ≤ x₂ ≤ B₁₂, 0 ≤ 2x₂ ≤ B₂₂} = 5·min{B₁₂, B₂₂/2}<br>Stage 1: f₁(B₁₁, B₂₁) = max<sub>0≤x₁≤B₁₁/2</sub>{2x₁ + 5·min[B₁₁ − 2x₁, B₂₁/2]}<br>B₁₁ = 43, B₂₁ = 46: f₁ = max<sub>0≤x₁≤43/2</sub>{2x₁ + 5·min[43 − 2x₁, 23]}</div>
+    <ul><li>43 − 2x₁ = 23 at x₁ = 10. So min = 23 for 0 ≤ x₁ ≤ 10 and 43 − 2x₁ for 10 ≤ x₁ ≤ 21.5.</li>
+      <li>Piece 1: 2x₁ + 115 (increasing) → at x₁ = 10: 135. Piece 2: 2x₁ + 215 − 10x₁ = 215 − 8x₁ (decreasing) → at x₁ = 10: 135.</li>
+      <li>x₂ = min{43 − 20, 23} = 23.</li></ul>
+    <div class="box">Max Z = 135 at x₁ = 10, x₂ = 23.</div>
+  </div></details>
+</section>
+
+<!-- ===================== UNIT 4 ===================== -->
+<section class="tab" id="u4">
+  <h2>Unit 4 · Queueing Theory</h2>
+  <div class="toc"><a href="#u4-th">Part A theory</a><a href="#u4-st">Solving template</a><a href="#u4-m1">Model I</a><a href="#u4-m2">Model II</a><a href="#u4-m3">Model III</a><a href="#u4-m4">Model IV</a></div>
+
+  <h3 id="u4-th">A. Part A theory</h3>
+  <dl class="qa">
+    <dt>1. Characteristics of a queueing system</dt>
+    <dd>(1) <b>Arrival pattern</b>: customers arrive at mean rate λ (Poisson arrivals ⇔ exponential inter-arrival times).<br>(2) <b>Service pattern</b>: mean service rate μ (exponential service time with mean 1/μ).<br>(3) <b>Number of servers (channels)</b>: single or multiple.<br>(4) <b>System capacity</b>: finite (N) or infinite (∞).<br>(5) <b>Queue discipline</b>: FIFO/FCFS, LIFO, SIRO (random), priority.<br>(6) <b>Customer behaviour</b>: <i>balking</i> (does not join a long queue), <i>reneging</i> (leaves after waiting), <i>jockeying</i> (switches queues), <i>collusion</i>.</dd>
+    <dt>2. Queue discipline <span class="badge b-ese">ESE Q7</span></dt>
+    <dd>The queue discipline is the <b>rule that decides the order in which waiting customers are selected for service</b>, e.g. FIFO (first in first out), LIFO (last in first out), SIRO (service in random order) and priority service. It also covers how the queue forms and how customers behave while waiting.</dd>
+    <dt>3. Kendall’s notation <span class="badge b-ese">ESE Q8</span><span class="badge b-cat">CAT3 Q1</span><span class="badge b-hot">★</span></dt>
+    <dd>A queueing model is written as <b>(a / b / c) : (d / e)</b>, where<br>a = arrival (inter-arrival time) distribution · b = service-time distribution · c = number of servers · d = capacity of the system (max customers allowed) · e = queue discipline.<br><b>M</b> = Markovian (Poisson arrivals / exponential service), <b>D</b> = deterministic (constant), <b>G</b> = general.<br>Example: (M/M/1):(∞/FIFO) = Poisson arrivals, exponential service, 1 server, infinite capacity, first-in-first-out.</dd>
+    <dt>4. Little’s formulae <span class="badge b-cat">CAT3 Q3</span></dt>
+    <dd><b>Ls = λ·Ws</b> · <b>Lq = λ·Wq</b> · <b>Ws = Wq + 1/μ</b> · <b>Ls = Lq + λ/μ</b>. For finite-capacity models replace λ by the effective rate λ′.</dd>
+    <dt>5. Traffic intensity (utilisation)</dt>
+    <dd>ρ = λ/(cμ) = fraction of time a server is busy. For infinite-capacity models a steady state needs ρ &lt; 1.</dd>
+    <dt>6. Symbols</dt>
+    <dd>Ls = E(N) = average number in the system · Lq = E(Nq) = average number in the queue · Ws = E(W) = average time in the system · Wq = average time in the queue · P₀ = probability the system is empty · Pₙ = probability of n customers.</dd>
+    <dt>7. Transient vs steady state</dt>
+    <dd><b>Transient</b>: probabilities depend on time (just after opening). <b>Steady state</b>: probabilities no longer change with time; all formulas here are steady-state.</dd>
+  </dl>
+
+  <h3 id="u4-st">B. Template for every queue problem</h3>
+  <ol class="steps">
+    <li><b>Identify the model</b>: number of servers c (1 or more) and capacity (∞ or N). Write the Kendall notation.</li>
+    <li><b>Find λ and μ in the same time unit.</b> “One arrival every 10 min” ⇒ λ = 1/10 per min = 6 per hr. “Service takes 3 min on average” ⇒ μ = 1/3 per min = 20 per hr.</li>
+    <li>Compute λ/μ and ρ = λ/(cμ). For infinite capacity check ρ &lt; 1.</li>
+    <li>Compute <b>P₀</b> with the model’s formula.</li>
+    <li>Compute the asked measure (Lq first is easiest for multi-server), then get the rest from <b>Little’s formulae</b>.</li>
+    <li>Write units (customers, hours, minutes) and a one-line interpretation.</li>
+  </ol>
+
+  <h3 id="u4-m1">C. Model I · (M/M/1):(∞/FIFO)</h3>
+  <div class="eq wrap">ρ = λ/μ &lt; 1 · P₀ = 1 − ρ · Pₙ = ρⁿ(1 − ρ)<br>
+  Ls = ρ/(1−ρ) = λ/(μ−λ) · Lq = ρ²/(1−ρ) = λ²/[μ(μ−λ)]<br>
+  Ws = 1/(μ−λ) · Wq = λ/[μ(μ−λ)]<br>
+  P(n ≥ k) = ρᵏ · P(customer has to wait) = ρ · P(server idle) = 1 − ρ<br>
+  Average length of non-empty queue (L | L &gt; 0) = μ/(μ−λ)<br>
+  Expected waiting time of a customer who has to wait (W | W &gt; 0) = 1/(μ−λ)<br>
+  P(time in system &gt; t) = e<sup>−(μ−λ)t</sup> · P(time in queue &gt; t) = ρ·e<sup>−(μ−λ)t</sup></div>
+
+  <details class="sol" open><summary>Example 1 · λ = 12/hr, μ = 24/hr, find Ls <span class="badge b-cat">CAT3 Q2</span></summary><div class="db">
+    <div class="eq">ρ = 12/24 = 0.5 · Ls = λ/(μ−λ) = 12/(24−12) = <b>1 customer</b></div>
+  </div></details>
+
+  <details class="sol" open><summary>Example 2 · Computer-lab server <span class="badge b-cat">CAT3 Q11 · 10 m</span></summary><div class="db">
+    <p>One request every 27 min (Poisson), each takes 10 min, single server, unlimited queue.</p>
+    <ol class="steps mini">
+      <li>Model (M/M/1):(∞/FIFO). λ = 1/27 per min, μ = 1/10 per min.</li>
+      <li>ρ = λ/μ = 10/27 = 0.3704 (&lt; 1 ✓).</li>
+      <li>Ls = ρ/(1 − ρ) = (10/27)/(17/27) = 10/17 = <b>0.588 requests</b>.</li>
+      <li>Lq = ρ²/(1 − ρ) = (100/729)/(17/27) = 100/459 = <b>0.218 requests</b>.</li>
+      <li>Wq = Lq/λ = 0.218 × 27 = <b>5.88 min</b> (also Ws = 1/(μ−λ) = 15.88 min).</li>
+    </ol>
+    <p class="sm mu">The service time is exactly 10 min (constant), so strictly this is M/D/1: Lq = ρ²/[2(1−ρ)] = 0.109, Ls = 0.479, Wq = 2.94 min. Your class solved the similar “constant 2 minutes” theatre problem with M/M/1 formulas, so write the M/M/1 answer and add the M/D/1 line as a remark.</p>
+  </div></details>
+
+  <details class="sol"><summary>Example 3 · Railway marshalling yard <span class="badge b-notes">Notes</span></summary><div class="db">
+    <p>30 trains/day, service 36 min. (i) Ls, Lq (ii) P(queue size ≥ 10) (iii) changes if 33 trains/day.</p>
+    <ol class="steps mini">
+      <li>λ = 30/(24×60) = 1/48 per min, μ = 1/36 per min, ρ = 36/48 = 0.75.</li>
+      <li>Ls = ρ/(1−ρ) = 0.75/0.25 = <b>3 trains</b>; Lq = ρ²/(1−ρ) = 0.5625/0.25 = <b>2.25 trains</b>.</li>
+      <li>P(≥ 10) = ρ¹⁰ = 0.75¹⁰ = <b>0.0563</b>.</li>
+      <li>33/day: λ = 33/1440 = 0.02292, ρ = 0.825 → Ls = 0.825/0.175 = <b>4.71 trains</b>, P(≥10) = 0.825¹⁰ = <b>0.146</b>.</li>
+    </ol>
+    <p class="sm mu">Your notes wrote Lq = 2.55; the correct value is 2.25.</p>
+  </div></details>
+
+  <details class="sol"><summary>More M/M/1 drills from your notes (answers)</summary><div class="db">
+    <div class="tw"><table class="lt">
+      <tr><th>Problem</th><th>λ, μ</th><th>Answers</th></tr>
+      <tr><td>Supermarket: 10 per 30 min, cashier 2.5 min</td><td>λ=1/3, μ=1/2.5 per min, ρ=0.833</td><td>P(n ≥ 6)=ρ⁶=0.335 · Ws=1/(μ−λ)=15 min</td></tr>
+      <tr><td>Phone booth: 15/hr, call 3 min</td><td>λ=15, μ=20 /hr, ρ=0.75</td><td>(L|L&gt;0)=μ/(μ−λ)=4 · idle fraction 1−ρ=0.25</td></tr>
+      <tr><td>Drive-in bank: 10/hr, 5 min, space for 3 cars</td><td>λ=10, μ=12 /hr, ρ=0.833</td><td>P(drive straight in)=P₀+P₁+P₂=0.421 · P(wait outside)=0.579 · Wq=λ/[μ(μ−λ)]=0.417 hr=25 min</td></tr>
+      <tr><td>Petrol pump: 10/hr, 3 min</td><td>λ=10, μ=20 /hr, ρ=0.5</td><td>Ls=1 · Wq=0.05 hr=3 min · Lq=0.5 · P₂=ρ²(1−ρ)=0.125</td></tr>
+      <tr><td>Theatre booth: 25/hr, 2 min</td><td>λ=25, μ=30 /hr, ρ=0.833</td><td>Lq=4.17 · Wq=1/6 hr=10 min · utilisation 0.833</td></tr>
+      <tr><td>Telephone: every 10 min, call 3 min</td><td>λ=1/10, μ=1/3 per min, ρ=0.3</td><td>P(wait)=ρ=0.3 · Ls=0.43 · (W|W&gt;0)=1/(μ−λ)=4.29 min</td></tr>
+    </table></div>
+    <p class="sm mu">In the telephone problem your notes label 4.28 min as “probability of waiting”; it is the expected wait of those who wait. P(wait) = 0.3.</p>
+  </div></details>
+
+  <h3 id="u4-m2">D. Model II · (M/M/c):(∞/FIFO)</h3>
+  <div class="eq wrap">ρ = λ/(cμ) &lt; 1<br>
+  <b>P₀ = [ Σ<sub>n=0</sub><sup>c−1</sup> (λ/μ)ⁿ/n! + (λ/μ)ᶜ / (c!(1−ρ)) ]⁻¹</b><br>
+  Pₙ = (λ/μ)ⁿ/n! · P₀ (n &lt; c) · Pₙ = (λ/μ)ⁿ/(c!·cⁿ⁻ᶜ) · P₀ (n ≥ c)<br>
+  <b>P(all servers busy) = P(n ≥ c) = (λ/μ)ᶜ P₀ / [c!(1−ρ)]</b><br>
+  <b>Lq = P₀ (λ/μ)ᶜ ρ / [c!(1−ρ)²]</b> · Ls = Lq + λ/μ · Wq = Lq/λ · Ws = Wq + 1/μ<br>
+  P(time in system &gt; t) = e<sup>−μt</sup>[1 + P(n≥c)·(1 − e<sup>−μt(c−1−λ/μ)</sup>)/(c − 1 − λ/μ)]<br>
+  P(time in queue &gt; t) = P(n≥c)·e<sup>−(cμ−λ)t</sup></div>
+
+  <details class="sol" open><summary>Example 4 · Three typists <span class="badge b-ese">ESE 14a · 16 m</span><span class="badge b-hot">KEY HAS ERROR</span></summary><div class="db">
+    <p>c = 3 typists, each types 6 letters/hr; letters arrive at 15/hr.</p>
+    <ol class="steps mini">
+      <li>Model (M/M/3):(∞/FIFO). λ = 15/hr, μ = 6/hr, λ/μ = 2.5, ρ = 15/18 = 5/6 = 0.8333.</li>
+      <li><b>P₀</b> = [1 + 2.5 + 2.5²/2 + (2.5³/3!)·1/(1 − 5/6)]⁻¹ = [1 + 2.5 + 3.125 + 2.6042 × 6]⁻¹ = [6.625 + 15.625]⁻¹ = 1/22.25 = <b>0.04494</b>.</li>
+      <li><b>(1) Fraction of time all typists are busy</b> = P(n ≥ 3) = (2.5³/3!)·P₀/(1 − ρ) = 2.6042 × 0.04494 × 6 = <b>0.7022</b> (about 70% of the time).</li>
+      <li><b>(2) Average letters waiting</b>: Lq = P₀(λ/μ)ᶜρ/[c!(1−ρ)²] = 0.04494 × 15.625 × 0.8333 / (6 × 1/36) = 0.5852/0.16667 = <b>3.51 letters</b>.</li>
+      <li><b>(3) Average waiting time</b>: Wq = Lq/λ = 3.51/15 = 0.234 hr = <b>14.0 min</b> in the queue; time in system Ws = Wq + 1/μ = 0.234 + 0.1667 = 0.4007 hr ≈ <b>24 min</b>.</li>
+      <li><b>(4) P(waiting + typing &gt; 20 min)</b>, t = 1/3 hr: μt = 2, c − 1 − λ/μ = −0.5.<br>(1 − e<sup>−2(−0.5)</sup>)/(−0.5) = (1 − e)/(−0.5) = 3.4366.<br>P = e<sup>−2</sup>[1 + 0.7022 × 3.4366] = 0.13534 × 3.4132 = <b>0.4619</b>.</li>
+    </ol>
+    <div class="box">P(all busy) = 0.702 · Lq = 3.51 letters · Wq = 14 min (Ws = 24 min) · P(W &gt; 20 min) = 0.462</div>
+    <p class="sm mu">The key writes P(all busy) = 1/22.25 = 0.0444. 1/22.25 is P₀ (all idle), not “all busy”. The formula written in the key gives 0.702.</p>
+  </div></details>
+
+  <details class="sol" open><summary>Example 5 · Help desk with 2 technicians <span class="badge b-cat">CAT3 Q12 · 10 m</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>(M/M/2):(∞/FIFO), λ = 8/hr, μ = 5/hr, λ/μ = 1.6, ρ = 8/10 = 0.8.</li>
+      <li><b>P₀</b> = [1 + 1.6 + (1.6²/2!)·1/(1 − 0.8)]⁻¹ = [2.6 + 1.28 × 5]⁻¹ = [2.6 + 6.4]⁻¹ = 1/9 = <b>0.111</b>.</li>
+      <li><b>Lq</b> = P₀(λ/μ)²ρ/[2!(1−ρ)²] = (1/9)(2.56)(0.8)/(2 × 0.04) = (1/9)(25.6) = <b>2.84 students</b>.</li>
+      <li><b>Ls</b> = Lq + λ/μ = 2.844 + 1.6 = <b>4.44 students</b>.</li>
+      <li><b>Ws</b> = Ls/λ = 4.444/8 = 0.556 hr = <b>33.3 min</b> (Wq = 0.356 hr = 21.3 min).</li>
+    </ol>
+  </div></details>
+
+  <details class="sol"><summary>Example · P₀ for 3 servers with λ/(cμ) = 2/3 <span class="badge b-cat">CAT3 Q4</span></summary><div class="db">
+    <div class="eq">c = 3, ρ = 2/3 ⇒ λ/μ = cρ = 2<br>P₀ = [1 + 2 + 2²/2! + (2³/3!)·1/(1 − 2/3)]⁻¹ = [5 + (8/6)·3]⁻¹ = [5 + 4]⁻¹ = <b>1/9</b></div>
+  </div></details>
+
+  <h3 id="u4-m3">E. Model III · (M/M/1):(N/FIFO): finite capacity, 1 server</h3>
+  <div class="eq wrap">ρ = λ/μ (may be ≥ 1)<br>
+  <b>P₀ = (1 − ρ)/(1 − ρᴺ⁺¹)</b> (ρ ≠ 1); P₀ = 1/(N+1) (ρ = 1) · Pₙ = ρⁿP₀, n = 0…N<br>
+  <b>Ls = ρ/(1−ρ) − (N+1)ρᴺ⁺¹/(1 − ρᴺ⁺¹)</b> (ρ ≠ 1); Ls = N/2 (ρ = 1)<br>
+  Effective arrival rate <b>λ′ = λ(1 − P<sub>N</sub>) = μ(1 − P₀)</b><br>
+  Lq = Ls − (1 − P₀) = Ls − λ′/μ · Ws = Ls/λ′ · Wq = Lq/λ′ · P(arrival turned away) = P<sub>N</sub></div>
+  <details class="sol" open><summary>Practice · one server, room for N = 4 customers, λ = 3/hr, μ = 4/hr <span class="badge b-hot">LIKELY NEXT</span></summary><div class="db">
+    <p class="sm mu">Model III has not been asked yet, so it is a likely next question. This is a textbook-style practice problem.</p>
+    <ol class="steps mini">
+      <li>ρ = 3/4 = 0.75, N = 4.</li>
+      <li>P₀ = (1 − 0.75)/(1 − 0.75⁵) = 0.25/(1 − 0.2373) = 0.25/0.7627 = <b>0.3278</b>.</li>
+      <li>P₄ = 0.75⁴ × 0.3278 = 0.3164 × 0.3278 = <b>0.1037</b> (10.4% of customers are turned away).</li>
+      <li>Ls = 0.75/0.25 − 5(0.2373)/0.7627 = 3 − 1.5557 = <b>1.444</b>.</li>
+      <li>λ′ = 3(1 − 0.1037) = <b>2.689/hr</b>. Lq = Ls − (1 − P₀) = 1.444 − 0.672 = <b>0.772</b>.</li>
+      <li>Ws = Ls/λ′ = 0.537 hr = <b>32.2 min</b>. Wq = Lq/λ′ = 0.287 hr = <b>17.2 min</b>.</li>
+    </ol>
+  </div></details>
+
+  <h3 id="u4-m4">F. Model IV · (M/M/c):(N/FIFO): finite capacity, c servers</h3>
+  <div class="eq wrap">ρ = λ/(cμ)<br>
+  <b>P₀ = [ Σ<sub>n=0</sub><sup>c−1</sup> (λ/μ)ⁿ/n! + ((λ/μ)ᶜ/c!) · Σ<sub>n=c</sub><sup>N</sup> ρⁿ⁻ᶜ ]⁻¹</b> <span class="badge b-cat">CAT3 Q5</span><br>
+  Pₙ = (λ/μ)ⁿ/n! · P₀ (0 ≤ n &lt; c) · Pₙ = (λ/μ)ⁿ/(c!·cⁿ⁻ᶜ) · P₀ (c ≤ n ≤ N)<br>
+  Lq = Σ<sub>n=c</sub><sup>N</sup>(n − c)Pₙ = P₀(λ/μ)ᶜρ/[c!(1−ρ)²] · [1 − ρᴺ⁻ᶜ⁺¹ − (1−ρ)(N−c+1)ρᴺ⁻ᶜ]<br>
+  Ls = Lq + c − Σ<sub>n=0</sub><sup>c−1</sup>(c − n)Pₙ<br>
+  λ′ = λ(1 − P<sub>N</sub>) = μ[c − Σ<sub>n=0</sub><sup>c−1</sup>(c − n)Pₙ] · Ws = Ls/λ′ · Wq = Lq/λ′</div>
+
+  <details class="sol" open><summary>Example 6 · Port with 6 berths and 4 crews <span class="badge b-ese">ESE 14b · 16 m</span><span class="badge b-hot">KEY HAS ERROR</span></summary><div class="db">
+    <p>Tankers arrive 1 every 2 hr, a crew unloads in 10 hr (exponential), 4 crews, 6 berths (when full, ships go to an overflow facility).</p>
+    <ol class="steps mini">
+      <li>Model (M/M/4):(6/FIFO): c = 4, N = 6, λ = 1/2 per hr, μ = 1/10 per hr, λ/μ = 5, ρ = λ/(cμ) = 5/4 = 1.25 (allowed, capacity is finite).</li>
+      <li><b>P₀</b>: Σ<sub>n=0</sub><sup>3</sup> 5ⁿ/n! = 1 + 5 + 12.5 + 20.833 = 39.333. (5⁴/4!)·(1 + 1.25 + 1.25²) = 26.042 × 3.8125 = 99.284. P₀ = 1/(39.333 + 99.284) = 1/138.617 = <b>0.00721</b>.</li>
+      <li><b>Pₙ</b>: P₁ = 5P₀ = 0.0361, P₂ = 12.5P₀ = 0.0902, P₃ = 20.833P₀ = 0.1503, P₄ = 26.042P₀ = 0.1879, P₅ = P₄(1.25) = 0.2348, <b>P₆</b> = P₅(1.25) = <b>0.2935</b>.</li>
+      <li><b>Lq</b> = 1·P₅ + 2·P₆ = 0.2348 + 0.5871 = <b>0.822</b>.</li>
+      <li>Σ(c − n)Pₙ (n = 0..3) = 4(0.00721) + 3(0.0361) + 2(0.0902) + 1(0.1503) = 0.4677.</li>
+      <li><b>(1) Tankers at the port</b>: Ls = Lq + c − 0.4677 = 0.822 + 3.532 = <b>4.35 tankers</b>.</li>
+      <li>λ′ = λ(1 − P₆) = 0.5 × 0.7065 = <b>0.3532/hr</b> (check: μ(4 − 0.4677) = 0.3532 ✓).</li>
+      <li><b>(2) Time at the port</b>: Ws = Ls/λ′ = 4.354/0.3532 = <b>12.33 hr</b> (Wq = Lq/λ′ = 2.33 hr).</li>
+      <li><b>(3) Arrival rate at the overflow facility</b> = λ·P₆ = 0.5 × 0.2935 = <b>0.147 tankers/hr</b> (≈ 3.5 per day).</li>
+    </ol>
+    <p class="sm mu">The key’s P₀, Ls and Ws match these values, but it then writes ½ × 0.2930 = 0.586. ½ × 0.293 is 0.147.</p>
+  </div></details>
+</section>
+
+<!-- ===================== UNIT 5 ===================== -->
+<section class="tab" id="u5">
+  <h2>Unit 5 · Non-Linear Programming</h2>
+  <div class="toc"><a href="#u5-th">Part A theory</a><a href="#u5-cv">Convex / concave test</a><a href="#u5-lg">Lagrange (equality)</a><a href="#u5-kt">Kuhn–Tucker (inequality)</a><a href="#u5-fm">Formulation</a></div>
+
+  <h3 id="u5-th">A. Part A theory</h3>
+  <dl class="qa">
+    <dt>1. Mathematical formulation of an NLPP <span class="badge b-cat">CAT3 Q6</span></dt>
+    <dd>Optimise Z = f(x₁, x₂, …, xₙ) subject to gᵢ(x₁, …, xₙ) {≤, =, ≥} bᵢ (i = 1, …, m) and xⱼ ≥ 0, where <b>f and/or some gᵢ are non-linear</b>. Example: Max Z = 10x₁ + 4x₂ − 2x₁² − x₂² s.t. 2x₁ + x₂ ≤ 5, x₁, x₂ ≥ 0.</dd>
+    <dt>2. Lagrangian function <span class="badge b-ese">ESE Q10</span></dt>
+    <dd>For optimising f(x) subject to h(x) = g(x) − b = 0, the Lagrangian is <b>L(x, λ) = f(x) − λ·h(x)</b> (one multiplier λᵢ per constraint: L = f − Σλᵢhᵢ). λ is the <b>Lagrange multiplier</b>; the necessary conditions are ∂L/∂xⱼ = 0 and ∂L/∂λ = 0.</dd>
+    <dt>3. Kuhn–Tucker conditions <span class="badge b-ese">ESE Q9</span><span class="badge b-hot">★</span></dt>
+    <dd>For <b>Max f(x)</b> subject to hᵢ(x) = gᵢ(x) − bᵢ ≤ 0, x ≥ 0:<br>(i) ∂f/∂xⱼ − Σᵢ λᵢ ∂hᵢ/∂xⱼ = 0, j = 1, …, n<br>(ii) λᵢ hᵢ(x) = 0 (complementary slackness)<br>(iii) hᵢ(x) ≤ 0<br>(iv) λᵢ ≥ 0</dd>
+    <dt>4. Sufficiency of Kuhn–Tucker conditions <span class="badge b-cat">CAT3 Q9</span></dt>
+    <dd>For Max f(x) subject to hᵢ(x) ≤ 0, the KT conditions are also <b>sufficient</b> for a global maximum if <b>f(x) is concave</b> and <b>every hᵢ(x) is convex</b> (linear constraints are convex). For a minimisation, f must be convex (with the constraints written as ≥ type, or converted to Max −f).</dd>
+    <dt>5. Convex and concave functions</dt>
+    <dd>f is <b>convex</b> if f(θx + (1−θ)y) ≤ θf(x) + (1−θ)f(y) for 0 ≤ θ ≤ 1 (the chord lies above the curve). f is <b>concave</b> if −f is convex. A convex f has its stationary point as a <b>minimum</b>; a concave f gives a <b>maximum</b>.</dd>
+  </dl>
+
+  <h3 id="u5-cv">B. Convex / concave test</h3>
+  <div class="tw"><table>
+    <tr><th>Quantity (A = f<sub>x₁x₁</sub>, B = f<sub>x₁x₂</sub>, C = f<sub>x₂x₂</sub>)</th><th>Convex</th><th>Strictly convex</th><th>Concave</th><th>Strictly concave</th></tr>
+    <tr><td>AC − B²</td><td>≥ 0</td><td>&gt; 0</td><td>≥ 0</td><td>&gt; 0</td></tr>
+    <tr><td>A = ∂²f/∂x₁²</td><td>≥ 0</td><td>&gt; 0</td><td>≤ 0</td><td>&lt; 0</td></tr>
+    <tr><td>C = ∂²f/∂x₂²</td><td>≥ 0</td><td>&gt; 0</td><td>≤ 0</td><td>&lt; 0</td></tr>
+  </table></div>
+  <p class="sm">One variable: f″ ≥ 0 convex, f″ ≤ 0 concave. If AC − B² &lt; 0 → <b>neither</b> (saddle). n variables: Hessian with all leading principal minors &gt; 0 → convex; minors alternating −, +, −, … → concave.</p>
+  <details class="sol" open><summary>CAT3 Q7, Q8, Q10 (2-mark numerics)</summary><div class="db">
+    <p><b>Q7:</b> f(x) = x⁴ + 6x² + 12x → f′ = 4x³ + 12x + 12, f″ = 12x² + 12 &gt; 0 for every x → <b>strictly convex</b>.</p>
+    <p><b>Q8:</b> g = x₁x₂ − x₁² − x₂² → A = −2, B = 1, C = −2. AC − B² = 4 − 1 = 3 &gt; 0 and A &lt; 0 → <b>strictly concave</b>.</p>
+    <p><b>Q10:</b> f = x₁² − 10x₁ + x₂² − 6x₂ + x₃² − 4x₃, h = x₁ + x₂ + x₃ − 7. L = f − λh. Second derivatives: L<sub>x₁x₁</sub> = L<sub>x₂x₂</sub> = L<sub>x₃x₃</sub> = 2, all mixed ones = 0.</p>
+    <div class="eq">Q = [ 2 0 0 ; 0 2 0 ; 0 0 2 ] &nbsp;(and P = [1 1 1])</div>
+  </div></details>
+
+  <h3 id="u5-lg">C. Lagrange multiplier method (equality constraints): step by step</h3>
+  <ol class="steps">
+    <li>Write f(x) and each constraint as hᵢ(x) = gᵢ(x) − bᵢ = 0.</li>
+    <li>Form <b>L = f − λ₁h₁ − λ₂h₂ − …</b></li>
+    <li>Necessary conditions: <b>∂L/∂xⱼ = 0</b> for every j and <b>∂L/∂λᵢ = 0</b> (gives back the constraints).</li>
+    <li>Solve them together: usually express each xⱼ in terms of λ, substitute in the constraint, find λ, then x. If an equation factorises (e.g. x₂(1 − λ) = 0), treat each factor as a separate <b>case</b>.</li>
+    <li><b>Sufficient condition (bordered Hessian)</b>: H<sup>B</sup> = [ O P ; Pᵀ Q ] of order (m + n), where O = m×m zero matrix, P = m×n matrix of ∂hᵢ/∂xⱼ, Q = n×n matrix of ∂²L/∂xᵢ∂xⱼ at the point.</li>
+    <li><b>Sign rule:</b> compute the last (n − m) leading principal minors, starting with the one of order (2m + 1). <b>Minimum</b> if they all have the sign of (−1)ᵐ. <b>Maximum</b> if they alternate in sign starting with (−1)ᵐ⁺¹.</li>
+    <li>Put the point into f and state the optimum.</li>
+  </ol>
+  <div class="tw"><table>
+    <tr><th>Case</th><th>Minors to check</th><th>Minimum</th><th>Maximum</th></tr>
+    <tr><td>n = 2, m = 1</td><td>Δ₃ = |H<sup>B</sup>|</td><td>Δ₃ &lt; 0</td><td>Δ₃ &gt; 0</td></tr>
+    <tr><td>n = 3, m = 1</td><td>Δ₃, Δ₄</td><td>Δ₃ &lt; 0, Δ₄ &lt; 0</td><td>Δ₃ &gt; 0, Δ₄ &lt; 0</td></tr>
+    <tr><td>n = 3, m = 2</td><td>Δ₅ = |H<sup>B</sup>|</td><td>Δ₅ &gt; 0</td><td>Δ₅ &lt; 0</td></tr>
+  </table></div>
+  <div class="card tip sm"><b>Shortcut used in your notes:</b> if the constraints are linear and f is convex (AC − B² ≥ 0, A ≥ 0), the stationary point is a minimum; if f is concave, a maximum. Write the bordered Hessian as well when the question carries 16 marks.</div>
+
+  <details class="sol" open><summary>Example 1 · Min x₁²+(x₂+1)²+(x₃−1)², x₁+5x₂−3x₃ = 6 <span class="badge b-ese">ESE 15a · 16 m</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>h = x₁ + 5x₂ − 3x₃ − 6 = 0. L = x₁² + (x₂+1)² + (x₃−1)² − λ(x₁ + 5x₂ − 3x₃ − 6).</li>
+      <li>∂L/∂x₁ = 2x₁ − λ = 0 ⇒ x₁ = λ/2</li>
+      <li>∂L/∂x₂ = 2(x₂+1) − 5λ = 0 ⇒ x₂ = 5λ/2 − 1</li>
+      <li>∂L/∂x₃ = 2(x₃−1) + 3λ = 0 ⇒ x₃ = 1 − 3λ/2</li>
+      <li>∂L/∂λ = 0 ⇒ λ/2 + 5(5λ/2 − 1) − 3(1 − 3λ/2) = 6 ⇒ 35λ/2 − 8 = 6 ⇒ <b>λ = 4/5</b></li>
+      <li>x₁ = 2/5, x₂ = 1, x₃ = 1 − 6/5 = −1/5.</li>
+      <li>Bordered Hessian (m = 1, n = 3): P = [1 5 −3], Q = diag(2, 2, 2).<br>Δ₃ = |0 1 5; 1 2 0; 5 0 2| = −52 &lt; 0 · Δ₄ = |H<sup>B</sup>| = −140 &lt; 0 → both have the sign of (−1)¹ → <b>minimum</b>.</li>
+      <li>Z = (2/5)² + (1+1)² + (−1/5 − 1)² = 4/25 + 4 + 36/25 = <b>28/5 = 5.6</b>.</li>
+    </ol>
+    <div class="box">Min Z = 28/5 at x₁ = 2/5, x₂ = 1, x₃ = −1/5 (the answer the key expects).</div>
+    <p class="sm mu"><b>Note:</b> x₃ = −1/5 breaks x₃ ≥ 0. The key ignores this. If the examiner insists on x ≥ 0, the optimum moves to x₃ = 0: x₁ = 11/26, x₂ = 29/26, Min Z = 147/26 ≈ 5.654. Write the Lagrange answer and add this one line.</p>
+    <p class="sm mu">The key’s alternative method is substitution: x₃ = (x₁ + 5x₂ − 6)/3, then set ∂f/∂x₁ = ∂f/∂x₂ = 0. It gives the same point.</p>
+  </div></details>
+
+  <details class="sol" open><summary>Example 2 · Min x₁²+x₂²+x₃², 4x₁+x₂²+2x₃ = 14 <span class="badge b-cat">CAT3 Q13</span><span class="badge b-hot">NOTES WRONG</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>L = x₁² + x₂² + x₃² − λ(4x₁ + x₂² + 2x₃ − 14).</li>
+      <li>∂L/∂x₁ = 2x₁ − 4λ = 0 ⇒ x₁ = 2λ</li>
+      <li>∂L/∂x₂ = 2x₂ − 2λx₂ = 0 ⇒ <b>x₂(1 − λ) = 0</b> ⇒ x₂ = 0 or λ = 1</li>
+      <li>∂L/∂x₃ = 2x₃ − 2λ = 0 ⇒ x₃ = λ</li>
+      <li><b>Case (i) x₂ = 0:</b> constraint 4(2λ) + 0 + 2λ = 14 ⇒ λ = 7/5 ⇒ (14/5, 0, 7/5), Z = 196/25 + 49/25 = <b>9.8</b>.</li>
+      <li><b>Case (ii) λ = 1:</b> x₁ = 2, x₃ = 1, and 8 + x₂² + 2 = 14 ⇒ x₂² = 4 ⇒ x₂ = 2 ⇒ (2, 2, 1), Z = 4 + 4 + 1 = <b>9</b>.</li>
+      <li>Bordered Hessian at (2,2,1), λ = 1: P = [4, 2x₂, 2] = [4, 4, 2], Q = diag(2, 2 − 2λ, 2) = diag(2, 0, 2). Δ₃ = −32 &lt; 0, Δ₄ = −64 &lt; 0 → <b>minimum</b>. (At case (i): Δ₃ = 12.8, Δ₄ = 32, not a minimum.)</li>
+    </ol>
+    <div class="box">Min Z = 9 at x₁ = 2, x₂ = 2, x₃ = 1.</div>
+    <p class="sm mu">Your notes get λ = 7/3 (sign slip: they wrote −2x₃ in L) and end with Z = 5 at (2, 0, 1). That point does not satisfy the constraint (8 + 0 + 2 = 10 ≠ 14).</p>
+  </div></details>
+
+  <details class="sol"><summary>Example 3 · Max 5x₁+x₂−(x₁−x₂)², x₁+x₂ = 4 <span class="badge b-notes">Notes</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>L = 5x₁ + x₂ − (x₁ − x₂)² − λ(x₁ + x₂ − 4).</li>
+      <li>∂L/∂x₁ = 5 − 2(x₁ − x₂) − λ = 0 … (1); ∂L/∂x₂ = 1 + 2(x₁ − x₂) − λ = 0 … (2); x₁ + x₂ = 4 … (3).</li>
+      <li>(1) + (2): 6 − 2λ = 0 ⇒ λ = 3. (1) − (2): 4 − 4(x₁ − x₂) = 0 ⇒ x₁ − x₂ = 1. With (3): x₁ = 5/2, x₂ = 3/2.</li>
+      <li>Δ₃ = |0 1 1; 1 −2 2; 1 2 −2| = 8 &gt; 0 → maximum (n = 2, m = 1).</li>
+    </ol>
+    <div class="box">Max Z = 25/2 + 3/2 − 1 = 13 at (5/2, 3/2).</div>
+    <p class="sm">Similar notes problem: Max 4x₁ − x₁² + 8x₂ − x₂², x₁ + x₂ = 2 → λ = 4, (0, 2), Δ₃ = 4 &gt; 0, <b>Max Z = 12</b>.</p>
+  </div></details>
+
+  <details class="sol"><summary>Example 4 · Min x₁²−10x₁+x₂²−6x₂+x₃²−4x₃, x₁+x₂+x₃ = 7 <span class="badge b-notes">Notes</span><span class="badge b-cat">CAT3 Q10</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>L = f − λ(x₁ + x₂ + x₃ − 7). ∂L/∂x₁ = 2x₁ − 10 − λ = 0 ⇒ x₁ = 5 + λ/2; x₂ = 3 + λ/2; x₃ = 2 + λ/2.</li>
+      <li>Sum = 7 ⇒ 10 + 3λ/2 = 7 ⇒ λ = −2 ⇒ x₁ = 4, x₂ = 2, x₃ = 1.</li>
+      <li>H<sup>B</sup> = [0 1 1 1; 1 2 0 0; 1 0 2 0; 1 0 0 2]: Δ₃ = −4 &lt; 0, Δ₄ = −12 &lt; 0 → sign (−1)¹ → <b>minimum</b>.</li>
+    </ol>
+    <div class="box">Min Z = 16 − 40 + 4 − 12 + 1 − 4 = −35 at (4, 2, 1).</div>
+  </div></details>
+
+  <details class="sol"><summary>Example 5 · Two equality constraints: Min x₁²+x₂²+x₃², x₁+x₂+3x₃ = 2, 5x₁+2x₂+x₃ = 5 <span class="badge b-notes">Notes</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>L = f − λ₁(x₁ + x₂ + 3x₃ − 2) − λ₂(5x₁ + 2x₂ + x₃ − 5).</li>
+      <li>x₁ = (λ₁ + 5λ₂)/2, x₂ = (λ₁ + 2λ₂)/2, x₃ = (3λ₁ + λ₂)/2.</li>
+      <li>Substitute: 11λ₁ + 10λ₂ = 4 and 10λ₁ + 30λ₂ = 10 ⇒ λ₁ = 2/23 ≈ 0.087, λ₂ = 7/23 ≈ 0.304.</li>
+      <li>x₁ = 37/46 ≈ 0.804, x₂ = 8/23 ≈ 0.348, x₃ = 13/46 ≈ 0.283.</li>
+      <li>m = 2, n = 3: Δ₅ = |H<sup>B</sup>| = +460 &gt; 0 = sign (−1)² → minimum.</li>
+    </ol>
+    <div class="box">Min Z = 39/46 ≈ 0.848. (Notes: 0.8126, from rounding λ too early.)</div>
+  </div></details>
+
+  <h3 id="u5-kt">D. Kuhn–Tucker method (inequality constraints): step by step</h3>
+  <ol class="steps">
+    <li>Bring the problem to <b>Max f</b> with <b>≤</b> constraints (Min f → Max −f; a “≥” constraint → multiply by −1).</li>
+    <li>Write hᵢ(x) = gᵢ(x) − bᵢ ≤ 0.</li>
+    <li>Write the KT conditions: ∂f/∂xⱼ − Σλᵢ∂hᵢ/∂xⱼ = 0; λᵢhᵢ = 0; hᵢ ≤ 0; λᵢ ≥ 0. (Equivalent slack form used in your key: L = f − Σλᵢ(hᵢ + sᵢ²), with ∂L/∂sᵢ = −2λᵢsᵢ = 0.)</li>
+    <li><b>Case 1: λ = 0</b> (constraint not binding) → solve ∂f/∂xⱼ = 0. If the point satisfies h ≤ 0 → candidate found.</li>
+    <li><b>Case 2: h = 0</b> (constraint binding, λ ≠ 0) → solve with the constraint as an equation; accept only if <b>λ ≥ 0</b>. With 2 constraints check 4 cases (λ₁ = λ₂ = 0; λ₁ = 0 only; λ₂ = 0 only; both binding).</li>
+    <li><b>Sufficiency:</b> show f is concave (AC − B² &gt; 0, A &lt; 0) and each h is convex (linear is fine) → the KT point is the global maximum.</li>
+    <li>Compute Z.</li>
+  </ol>
+
+  <details class="sol" open><summary>Example 6 · Max 10x₁+4x₂−2x₁²−x₂², 2x₁+x₂ ≤ 5 <span class="badge b-cat">CAT3 Q14</span><span class="badge b-notes">Notes</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>f = 10x₁ + 4x₂ − 2x₁² − x₂², h = 2x₁ + x₂ − 5 ≤ 0.</li>
+      <li>KT: 10 − 4x₁ − 2λ = 0 … (1); 4 − 2x₂ − λ = 0 … (2); λ(2x₁ + x₂ − 5) = 0 … (3); 2x₁ + x₂ − 5 ≤ 0 … (4); λ ≥ 0.</li>
+      <li><b>Case λ = 0:</b> x₁ = 5/2, x₂ = 2 ⇒ h = 5 + 2 − 5 = 2 &gt; 0 ✗ (violates (4)).</li>
+      <li><b>Case 2x₁ + x₂ = 5:</b> from (1) x₁ = (5 − λ)/2, from (2) x₂ = (4 − λ)/2. Substitute: (5 − λ) + (4 − λ)/2 = 5 ⇒ 2 = 3λ/2 ⇒ <b>λ = 4/3 ≥ 0 ✓</b>.</li>
+      <li>x₁ = (5 − 4/3)/2 = 11/6 ≈ 1.833, x₂ = (4 − 4/3)/2 = 4/3.</li>
+      <li>Sufficiency: A = −4, B = 0, C = −2, AC − B² = 8 &gt; 0, A &lt; 0 → f concave; h linear → convex. ✓ global max.</li>
+      <li>Z = 10(11/6) + 4(4/3) − 2(121/36) − 16/9 = 55/3 + 16/3 − 121/18 − 32/18 = <b>91/6 ≈ 15.17</b>.</li>
+    </ol>
+    <div class="box">Max Z = 91/6 ≈ 15.17 at x₁ = 11/6, x₂ = 4/3.</div>
+  </div></details>
+
+  <details class="sol" open><summary>Example 7 · Max 10x₁−x₁²+10x₂−x₂², x₁+x₂≤14, −x₁+x₂≤6 <span class="badge b-ese">ESE 15b · 16 m</span></summary><div class="db">
+    <p class="sm mu">The paper prints “−x²” at the end; it means −x₂².</p>
+    <ol class="steps mini">
+      <li>h₁ = x₁ + x₂ − 14 ≤ 0, h₂ = −x₁ + x₂ − 6 ≤ 0.</li>
+      <li>KT: 10 − 2x₁ − λ₁ + λ₂ = 0 … (1); 10 − 2x₂ − λ₁ − λ₂ = 0 … (2); λ₁h₁ = 0; λ₂h₂ = 0; h₁, h₂ ≤ 0; λ₁, λ₂ ≥ 0.</li>
+      <li><b>Case λ₁ = λ₂ = 0</b> (unconstrained): x₁ = 5, x₂ = 5.</li>
+      <li>Check: h₁ = 10 − 14 = −4 ≤ 0 ✓; h₂ = 0 − 6 = −6 ≤ 0 ✓; λ’s = 0 ≥ 0 ✓ → all KT conditions hold.</li>
+      <li>Sufficiency: Hessian [−2 0; 0 −2], A = −2 &lt; 0, AC − B² = 4 &gt; 0 → f concave; h₁, h₂ linear → global maximum.</li>
+    </ol>
+    <div class="box">Max Z = 50 − 25 + 50 − 25 = 50 at x₁ = 5, x₂ = 5.</div>
+    <p class="sm mu">The key’s last line mentions “(4,4)”; that is a slip. The point is (5,5).</p>
+  </div></details>
+
+  <details class="sol"><summary>Example 8 · Max 4x₁−x₁³+2x₂, x₁+x₂ ≤ 1 <span class="badge b-notes">Notes</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>KT: 4 − 3x₁² − λ = 0; 2 − λ = 0 ⇒ λ = 2 ≠ 0 ⇒ constraint binding: x₁ + x₂ = 1.</li>
+      <li>4 − 3x₁² = 2 ⇒ x₁ = √(2/3) ≈ 0.8165; x₂ = 1 − 0.8165 = 0.1835.</li>
+      <li>f″ = −6x₁ ≤ 0 for x₁ ≥ 0 → concave; h linear.</li>
+    </ol>
+    <div class="box">Max Z ≈ 3.089 at x₁ = √(2/3), x₂ ≈ 0.184.</div>
+  </div></details>
+
+  <details class="sol"><summary>Example 9 · Min 0.3x₁²−2x₁+0.4x₂²−2.4x₂+0.6x₁x₂+100, 2x₁+x₂ ≥ 4 <span class="badge b-notes">Notes</span><span class="badge b-hot">NOTES WRONG</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>Minimisation with a “≥” constraint: h = 4 − 2x₁ − x₂ ≤ 0 (equivalently Max −f).</li>
+      <li><b>Case λ = 0:</b> ∂f/∂x₁ = 0.6x₁ − 2 + 0.6x₂ = 0; ∂f/∂x₂ = 0.8x₂ − 2.4 + 0.6x₁ = 0 ⇒ subtract: 0.2x₂ = 0.4 ⇒ x₂ = 2, x₁ = 4/3.</li>
+      <li>Check: 2(4/3) + 2 = 4.67 ≥ 4 ✓ → the unconstrained minimum is feasible, so it is the answer.</li>
+      <li>f convex: A = 0.6 &gt; 0, C = 0.8, B = 0.6, AC − B² = 0.48 − 0.36 = 0.12 &gt; 0.</li>
+    </ol>
+    <div class="box">Min Z ≈ 96.27 at x₁ = 4/3, x₂ = 2.</div>
+    <p class="sm mu">Your notes wrote the constraint as 2x₁ + x₂ − 4 ≤ 0 (wrong direction), rejected this point, and got 96.305 at (0.85, 2.28), which is a higher (worse) value.</p>
+  </div></details>
+
+  <details class="sol"><summary>Practice · Max 8x₁+10x₂−x₁²−x₂², 3x₁+2x₂ ≤ 6 <span class="badge b-notes">Notes list</span></summary><div class="db">
+    <p>Case λ = 0 gives (4, 5), which violates the constraint. Binding case: 8 − 2x₁ = 3λ, 10 − 2x₂ = 2λ, 3x₁ + 2x₂ = 6 ⇒ λ = 32/13 ≥ 0 ✓, x₁ = 4/13, x₂ = 33/13.</p>
+    <div class="box">Max Z = 277/13 ≈ 21.31</div>
+  </div></details>
+
+  <details class="sol"><summary>Graphical NLPP · Min x₁²+x₂², x₁+x₂≥8, x₁+2x₂≥10, 2x₁+x₂≥10 <span class="badge b-notes">Notes</span></summary><div class="db">
+    <ol class="steps mini">
+      <li>Z = x₁² + x₂² = r² are circles about the origin; we want the smallest circle touching the feasible region.</li>
+      <li>Slope of a circle: 2x₁dx₁ + 2x₂dx₂ = 0 ⇒ dx₂/dx₁ = −x₁/x₂.</li>
+      <li>Tangent to x₁ + x₂ = 8 (slope −1): x₁ = x₂ ⇒ (4, 4); check 12 ≥ 10 ✓, 12 ≥ 10 ✓ → feasible.</li>
+      <li>Tangent to x₁ + 2x₂ = 10 (slope −½): x₂ = 2x₁ ⇒ (2, 4), violates x₁ + x₂ ≥ 8 ✗. Tangent to 2x₁ + x₂ = 10: (4, 2) ✗.</li>
+    </ol>
+    <div class="box">Min Z = 32 at x₁ = x₂ = 4.</div>
+  </div></details>
+
+  <h3 id="u5-fm">E. Formulation examples (from notes)</h3>
+  <details><summary>Radio &amp; TV with price-dependent demand</summary><div class="db">
+    <p>Costs 200x₁ + 0.2x₁² (radio), 300x₂ + 0.2x₂² (TV). Demand: radio 2000 − 5p, TV 4000 − 10q. Capacity x₁ ≤ 100, x₂ ≤ 80, labour 2x₁ + 3x₂ ≤ 520.</p>
+    <ol class="steps mini"><li>From demand: p = 400 − 0.2x₁, q = 400 − 0.1x₂.</li>
+      <li>Revenue R = px₁ + qx₂ = 400x₁ − 0.2x₁² + 400x₂ − 0.1x₂².</li>
+      <li>Profit = R − C₁ − C₂.</li></ol>
+    <div class="eq">Max P = 200x₁ + 100x₂ − 0.4x₁² − 0.3x₂²<br>2x₁ + 3x₂ ≤ 520 · x₁ ≤ 100 · x₂ ≤ 80 · x₁, x₂ ≥ 0</div>
+  </div></details>
+  <details><summary>Products A &amp; B with quadratic costs</summary><div class="db">
+    <p>A: 30 min, 2 kg; B: 15 min, 3 kg. 35 machine-hours, 180 kg per week. Prices Rs 200 and Rs 500; costs 2x² and 3y².</p>
+    <div class="eq">Max Z = 200x + 500y − 2x² − 3y²<br>30x + 15y ≤ 35×60 ⇒ 2x + y ≤ 140<br>2x + 3y ≤ 180 · x, y ≥ 0</div>
+  </div></details>
+</section>
+
+<!-- ===================== FORMULA SHEET ===================== -->
+<section class="tab" id="fx">
+  <h2>⚡ Fast revision: all formulas &amp; theory</h2>
+  <p class="mu sm">Read this the night before and on the exam morning. ★ = asked before.</p>
+
+  <div class="card"><h3>Unit 1 · LPP</h3>
+    <div class="eq wrap">General LPP: Max/Min Z = Σcⱼxⱼ, Σaᵢⱼxⱼ (≤,=,≥) bᵢ, xⱼ ≥ 0<br>
+    ≤ → + slack · ≥ → − surplus + artificial · = → + artificial<br>
+    Artificial cost: −M (Max) · +M (Min) · Min Z = −Max(−Z)<br>
+    <b>Zⱼ − Cⱼ = Σ C<sub>B</sub>aᵢⱼ − Cⱼ</b> · optimal when all Zⱼ − Cⱼ ≥ 0 (Max)<br>
+    Entering = most negative Zⱼ − Cⱼ · Leaving = min X<sub>B</sub>/aᵢⱼ (aᵢⱼ &gt; 0)<br>
+    New key row = key row ÷ key element · other row = old − (key-col entry) × new key row<br>
+    Unbounded: no positive entry in key column · Infeasible: artificial in final basis with value &gt; 0<br>
+    Alternative optima: non-basic Zⱼ − Cⱼ = 0 at optimum · Degenerate: a basic variable = 0</div>
+    <ul class="sm"><li>★ Slack = unused resource (added to ≤); surplus = excess over requirement (subtracted from ≥).</li>
+      <li>★ Advantages: insight / clear picture · scientific analysis · strategies consistent with constraints · best use of resources.</li>
+      <li>Graphical: intercepts → shade → corner points → evaluate Z → best corner.</li></ul>
+  </div>
+
+  <div class="card"><h3>Unit 2 · Integer programming</h3>
+    <div class="eq wrap">Types: pure · mixed · zero-one (binary)<br>
+    X<sub>Bi</sub> = [X<sub>Bi</sub>] + fᵢ, 0 ≤ fᵢ &lt; 1 · source row = largest fᵢ<br>
+    Negative fraction: −⅔ = −1 + ⅓ (fractional part is always ≥ 0)<br>
+    <b>Pure cut:</b> Σ f<sub>kj</sub>xⱼ ≥ f<sub>k</sub> ⇒ −Σ f<sub>kj</sub>xⱼ + s₁ = −f<sub>k</sub><br>
+    <b>Mixed cut:</b> Σ<sub>aⱼ≥0</sub> aⱼxⱼ + [f/(f−1)] Σ<sub>aⱼ&lt;0</sub> aⱼxⱼ ≥ f<br>
+    <b>Dual simplex:</b> leaving = most negative X<sub>B</sub>; entering = Max{(Zⱼ−Cⱼ)/a<sub>rj</sub> : a<sub>rj</sub> &lt; 0}<br>
+    <b>B&amp;B:</b> branch xᵣ ≤ [xᵣ*] and xᵣ ≥ [xᵣ*] + 1 · fathom if infeasible / integer / not better</div>
+    <ul class="sm"><li>★ Zero-one: all variables take only 0 or 1 (yes/no decisions).</li>
+      <li>★ B&amp;B: starts with continuous optimum, partitions solution space into two sub-problems, eliminates parts with no feasible integer solution.</li></ul>
+  </div>
+
+  <div class="card"><h3>Unit 3 · Dynamic programming</h3>
+    <div class="eq wrap">★ Bellman: whatever the initial state and decision, the remaining decisions must be optimal for the state resulting from the first decision.<br>
+    Recursion (product): fₙ(c) = max<sub>0≤x≤c</sub>{x·fₙ₋₁(c−x)} ⇒ <b>fₙ = (c/n)ⁿ</b>, yᵢ = c/n<br>
+    Recursion (sum, product = b): fₙ(b) = min{x + fₙ₋₁(b/x)} ⇒ <b>fₙ = n·b<sup>1/n</sup></b>, yᵢ = b<sup>1/n</sup><br>
+    Sum of squares, product = b: <b>fₙ = n·b<sup>2/n</sup></b><br>
+    Σpᵢlog pᵢ, Σpᵢ = 1: fₙ(1) = min{x log x + fₙ₋₁(1−x)} ⇒ <b>pᵢ = 1/n, fₙ = −log n</b><br>
+    Σyᵢ², Σyᵢ = c (or ≥ c): yᵢ = c/n, f = c²/n<br>
+    LPP by DP: stage 2: f₂ = c₂·min{B₁₂/a₁₂, B₂₂/a₂₂}; stage 1: f₁ = max{c₁x₁ + f₂(B₁₁ − a₁₁x₁, B₂₁ − a₂₁x₁)}</div>
+    <ul class="sm"><li>★ Characteristics: stages with a policy decision at each · states at each stage · decision transforms the current state into the next · optimal policy for the remaining stages independent of earlier ones · recursive relation.</li>
+      <li>Applications: production scheduling &amp; employment smoothing · inventory · advertising media mix · shortest route · resource allocation.</li>
+      <li>f(x) minimum: f′ = 0 and f″ &gt; 0 (max: f″ &lt; 0).</li></ul>
+  </div>
+
+  <div class="card"><h3>Unit 4 · Queueing</h3>
+    <div class="eq wrap">★ Kendall: (a/b/c):(d/e) = arrival dist / service dist / servers : capacity / discipline<br>
+    ★ Little: Ls = λWs · Lq = λWq · Ws = Wq + 1/μ · Ls = Lq + λ/μ<br>
+    <b>M/M/1:</b> ρ = λ/μ · P₀ = 1−ρ · Pₙ = ρⁿ(1−ρ) · Ls = λ/(μ−λ) · Lq = λ²/[μ(μ−λ)]<br>
+    &nbsp;&nbsp;Ws = 1/(μ−λ) · Wq = λ/[μ(μ−λ)] · P(n≥k) = ρᵏ · (L|L&gt;0) = μ/(μ−λ) · P(W&gt;t) = e<sup>−(μ−λ)t</sup><br>
+    <b>M/M/c:</b> P₀ = [Σ<sub>0</sub><sup>c−1</sup>(λ/μ)ⁿ/n! + (λ/μ)ᶜ/(c!(1−ρ))]⁻¹, ρ = λ/(cμ)<br>
+    &nbsp;&nbsp;P(n≥c) = (λ/μ)ᶜP₀/[c!(1−ρ)] · Lq = P₀(λ/μ)ᶜρ/[c!(1−ρ)²] · Ls = Lq + λ/μ<br>
+    &nbsp;&nbsp;P(W&gt;t) = e<sup>−μt</sup>[1 + P(n≥c)(1 − e<sup>−μt(c−1−λ/μ)</sup>)/(c−1−λ/μ)] · P(Wq&gt;t) = P(n≥c)e<sup>−(cμ−λ)t</sup><br>
+    <b>M/M/1/N:</b> P₀ = (1−ρ)/(1−ρᴺ⁺¹) · Pₙ = ρⁿP₀ · Ls = ρ/(1−ρ) − (N+1)ρᴺ⁺¹/(1−ρᴺ⁺¹)<br>
+    &nbsp;&nbsp;λ′ = λ(1−P<sub>N</sub>) · Lq = Ls − (1−P₀) · Ws = Ls/λ′ · Wq = Lq/λ′<br>
+    <b>M/M/c/N:</b> P₀ = [Σ<sub>0</sub><sup>c−1</sup>(λ/μ)ⁿ/n! + ((λ/μ)ᶜ/c!)Σ<sub>n=c</sub><sup>N</sup>ρⁿ⁻ᶜ]⁻¹<br>
+    &nbsp;&nbsp;Pₙ = (λ/μ)ⁿP₀/n! (n&lt;c), (λ/μ)ⁿP₀/(c!cⁿ⁻ᶜ) (c≤n≤N) · Lq = Σ(n−c)Pₙ<br>
+    &nbsp;&nbsp;Ls = Lq + c − Σ<sub>0</sub><sup>c−1</sup>(c−n)Pₙ · λ′ = λ(1−P<sub>N</sub>) · overflow rate = λP<sub>N</sub></div>
+    <ul class="sm"><li>★ Queue discipline: rule for selecting customers for service (FIFO, LIFO, SIRO, priority).</li>
+      <li>Characteristics: arrival pattern · service pattern · number of servers · capacity · discipline · customer behaviour (balking, reneging, jockeying).</li>
+      <li>Always convert λ and μ to the same time unit first.</li></ul>
+  </div>
+
+  <div class="card"><h3>Unit 5 · NLPP</h3>
+    <div class="eq wrap">★ Lagrangian: L = f − Σλᵢhᵢ, hᵢ = gᵢ − bᵢ · conditions ∂L/∂xⱼ = 0, ∂L/∂λᵢ = 0<br>
+    Bordered Hessian H<sup>B</sup> = [O P; Pᵀ Q], order m+n · P = [∂hᵢ/∂xⱼ] · Q = [∂²L/∂xᵢ∂xⱼ]<br>
+    Check last (n−m) minors from order 2m+1: <b>Min</b> all sign (−1)ᵐ · <b>Max</b> alternate from (−1)ᵐ⁺¹<br>
+    n=2,m=1: Δ₃&gt;0 max, Δ₃&lt;0 min · n=3,m=1: (Δ₃,Δ₄) = (−,−) min, (+,−) max · n=3,m=2: Δ₅&gt;0 min, &lt;0 max<br>
+    ★ KT (Max f, hᵢ ≤ 0): ∂f/∂xⱼ − Σλᵢ∂hᵢ/∂xⱼ = 0 · λᵢhᵢ = 0 · hᵢ ≤ 0 · λᵢ ≥ 0<br>
+    KT sufficient: f concave and all hᵢ convex (Max) · f convex (Min)<br>
+    Convex: AC − B² ≥ 0, A ≥ 0 · Concave: AC − B² ≥ 0, A ≤ 0 · Neither: AC − B² &lt; 0</div>
+  </div>
+
+  <div class="card imp"><h3>★ Exam-hall checklist</h3>
+    <ol class="sm">
+      <li>Write the <b>standard form</b> and the <b>initial basic feasible solution</b>: these steps carry marks.</li>
+      <li>In every simplex table, mark the entering column, the ratios, the leaving row and the key element.</li>
+      <li>For Min problems say “Min Z = −Max Z*” at the end.</li>
+      <li>For DP always write: definition of fₙ, n = 1, n = 2, n = 3, general recursion, induction, optimal policy.</li>
+      <li>For queueing write the model in Kendall notation, λ, μ (same units), ρ, then P₀ before anything else.</li>
+      <li>For NLPP always finish with the sufficiency check (bordered Hessian or concavity) and the value of Z.</li>
+      <li>Box the final answer with units.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===================== FIXES ===================== -->
+<section class="tab" id="err">
+  <h2>⚠ Mistakes found in the answer key &amp; notes</h2>
+  <p class="mu sm">Each was re-checked by computer. Learn the corrected version.</p>
+  <div class="tw"><table class="lt">
+    <thead><tr><th>Where</th><th>What it says</th><th>Correct</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge b-ese">ESE 11b key</span> Big-M</td><td>Treats x₁+x₂ ≤ 6 as “≥” (adds −s₃ + R₂); final x₁ = −4, x₂ = −2, Z = 22</td><td>One artificial only. <b>Max Z = 24 at (6, 0)</b></td></tr>
+      <tr><td><span class="badge b-ese">ESE 12a</span></td><td>Paper says x₁ &gt; 0; key gives (0, 2)</td><td>Z = 2 at (0,2) or (1,1); if x₁ &gt; 0 is strict, write (1,1)</td></tr>
+      <tr><td><span class="badge b-ese">ESE 13b key</span></td><td>x₂ = (21 − 2λ)/2</td><td><b>x₂ = (21 − 2λ)/7</b>, 0 ≤ λ ≤ 7/3, Z = 42</td></tr>
+      <tr><td><span class="badge b-ese">ESE 14a key</span></td><td>P(all typists busy) = 1/22.25 = 0.044; “waiting time” = 24 min</td><td>P(n ≥ 3) = <b>0.702</b> (0.0449 is P₀). Wq = <b>14 min</b>; 24 min is time in system</td></tr>
+      <tr><td><span class="badge b-ese">ESE 14b key</span></td><td>Overflow rate = ½(0.293) = 0.586/hr</td><td>λP₆ = 0.5 × 0.2935 = <b>0.147/hr</b></td></tr>
+      <tr><td><span class="badge b-ese">ESE 15a</span></td><td>Answer x₃ = −1/5 (ignores x₃ ≥ 0)</td><td>Write 28/5 as asked; note that with x ≥ 0 enforced, Min = 147/26 at (11/26, 29/26, 0)</td></tr>
+      <tr><td><span class="badge b-ese">ESE 15b key</span></td><td>Eq. (2) written 10 − 2x₁ …; last line says point (4,4)</td><td>∂L/∂x₂: 10 − 2x₂ − λ₁ − λ₂ = 0; point is <b>(5, 5)</b>, Z = 50</td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> = CAT3 Q13</td><td>Min x₁²+x₂²+x₃², 4x₁+x₂²+2x₃=14 → Z = 5 at (2,0,1)</td><td>(2,0,1) is infeasible. <b>Min Z = 9 at (2, 2, 1)</b></td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> = CAT3 Q14</td><td>Max value 11.161 (then 15.18)</td><td><b>91/6 ≈ 15.17</b> at (11/6, 4/3)</td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> KT min problem</td><td>2x₁ + x₂ ≥ 4 written as 2x₁ + x₂ − 4 ≤ 0 → 96.305 at (0.85, 2.28)</td><td>Unconstrained min (4/3, 2) is feasible → <b>Min ≈ 96.27</b></td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> bordered Hessian rule</td><td>“sign (−1)ᵐ⁺ⁿ ⇒ max, (−1)ᵐ ⇒ min”; |H<sup>B</sup>| computed as −4</td><td>Use the textbook rule in Unit 5 (min: all (−1)ᵐ; max: alternate from (−1)ᵐ⁺¹). For n=2, m=1 a max needs Δ₃ &gt; 0. That |H<sup>B</sup>| is −12 (the sign was right).</td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> 2-constraint Lagrange</td><td>Z = 0.8126</td><td><b>39/46 ≈ 0.848</b> (rounding error)</td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> DP A2</td><td>Writes max{x + b/x}</td><td>It is a <b>min</b> problem: min{x + b/x}</td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> railway queue</td><td>Lq = 2.55</td><td><b>Lq = 2.25</b></td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> telephone queue</td><td>“Probability of waiting = 4.28”</td><td>P(wait) = ρ = 0.3; 4.29 min is the wait of those who wait</td></tr>
+      <tr><td><span class="badge b-notes">Board</span> B&amp;B x₁+4x₂</td><td>LP optimum Z = 6.8</td><td>Z = 7 at (0, 7/4); final answer 5 at (1,1) unchanged</td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> Max 3x₁+4x₂ (B&amp;B start)</td><td>LP optimum 20.5 at (6.3, 0.4)</td><td>(196/31, 15/31) ≈ (6.32, 0.48), Z ≈ 20.90; integer optimum Z = 19 at (5, 1)</td></tr>
+      <tr><td><span class="badge b-notes">Notes</span> Max 7x₁²+8x₁+5x₂²</td><td>722.4 at (9.6, 0.21)</td><td>722.12 at (9.6, 0.2). f is convex, so KT is not sufficient; it is the best corner</td></tr>
+    </tbody></table></div>
+</section>
+
+</main>
+<button class="toplink" id="toTop" aria-label="Back to top">↑</button>
+<script>
+(function(){
+  var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  var btns=[].slice.call(document.querySelectorAll('nav.tabs button'));
+  function show(id,scroll){
+    var sec=document.getElementById(id); if(!sec||!sec.classList.contains('tab')) return;
+    document.querySelectorAll('section.tab').forEach(function(s){s.classList.toggle('on',s.id===id)});
+    btns.forEach(function(b){var on=b.dataset.t===id;b.setAttribute('aria-selected',on);if(on&&b.scrollIntoView)b.scrollIntoView({inline:'center',block:'nearest'})});
+    store.set('oe_tab',id); if(scroll!==false) window.scrollTo(0,0);
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){show(b.dataset.t);history.replaceState(null,'','#'+b.dataset.t)})});
+  document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
+  var h=(location.hash||'').slice(1); show(document.getElementById(h)?h:(store.get('oe_tab')||'home'),false);
+  var boxes=[].slice.call(document.querySelectorAll('#plan input'));
+  function prog(){var d=boxes.filter(function(b){return b.checked}).length;document.getElementById('pbar').style.width=(100*d/boxes.length)+'%';document.getElementById('ptxt').textContent=d+' / '+boxes.length+' done';boxes.forEach(function(b){b.parentNode.classList.toggle('done',b.checked)})}
+  boxes.forEach(function(b){b.checked=store.get('oe_'+b.dataset.k)==='1';b.addEventListener('change',function(){store.set('oe_'+b.dataset.k,b.checked?'1':'0');prog()})});
+  prog();
+  var tt=document.getElementById('toTop');tt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+  function tv(){tt.style.display=window.scrollY>600?'block':'none'} window.addEventListener('scroll',tv,{passive:true}); tv();
+})();
+</script>
+</body>
+</html>
